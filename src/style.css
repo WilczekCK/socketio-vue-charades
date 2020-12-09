@@ -1,0 +1,18 @@
+#app{
+    height:100vh;
+    width:100%;
+}
+
+.chat__container{
+    min-height:25%;
+    background:rgba(0,0,0,.2);
+}
+
+.chat__wrapper{
+    padding-top:10px;
+}
+
+.game__container{
+    min-height:75%;
+}
+

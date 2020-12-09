@@ -1,5 +1,21 @@
 <template>
-<h2>Example heading <b-badge>New</b-badge></h2>
+    <b-container class="chat__wrapper">
+        <b-container class="chat__menu">
+            <b-row>
+                <b-col>
+                      <b-button block variant="primary">Change nickname</b-button>
+                </b-col>
+                <b-col>
+                      <b-button block variant="primary">Ask for help</b-button>
+                </b-col>
+                <b-col>
+                      <b-button block variant="primary">FAQ</b-button>
+                </b-col>
+            </b-row>
+        </b-container>
+        <b-container class="chat__container">
+        </b-container>
+    </b-container>
 </template>
 
 <script>

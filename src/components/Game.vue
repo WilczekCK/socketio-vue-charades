@@ -1,5 +1,5 @@
 <template>
-<h2>Example heading <b-badge>New</b-badge></h2>
+<h2><b-badge variant="primary">Vue + SocketIO Charades</b-badge></h2>
 </template>
 
 <script>

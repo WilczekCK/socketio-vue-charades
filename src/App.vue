@@ -1,13 +1,12 @@
 <template>
   <div id="app">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-6 offset-md-3">
-          <Chat />
-          <Game />
-        </div>
-      </div>
-    </div>
+    <b-container class="game__container">
+      <Game />
+    </b-container>
+
+    <b-container class="chat__container">
+      <Chat />
+    </b-container>
   </div>
 </template>
 
