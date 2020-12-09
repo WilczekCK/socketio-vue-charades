@@ -1,5 +1,7 @@
 <template>
-<h2><b-badge variant="primary">Vue + SocketIO Charades</b-badge></h2>
+<div style="height:100%;">
+    <h2><b-badge variant="primary">Vue + SocketIO Charades</b-badge></h2>
+</div>
 </template>
 
 <script>
