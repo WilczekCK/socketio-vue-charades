@@ -7,7 +7,13 @@
 .chat__container{
     overflow:hidden;
     background:rgba(0,0,0,.1);
-    padding-top:10px;
+    padding-left:0px;
+    padding-right:0px;
+}
+
+.chat__wrapper{
+    min-height:35%;
+    max-height:35%;
     padding-left:0px;
     padding-right:0px;
 }
@@ -23,12 +29,22 @@
     max-width:100%;
     width:100%;
     min-width: 100%;
+    padding-left:0px;
+    padding-right:0px;
 }
 
-.chat__wrapper{
-    min-height:30%;
-    max-height:30%;
+.chat__system div:first-of-type{
+    margin-bottom:0px;
 }
+
+.chat__system th:first-of-type{
+    width:50px;
+}
+
+.chat__system th:nth-of-type(2){
+    width:100px;
+}
+
 
 .game__container{
     background:white;
