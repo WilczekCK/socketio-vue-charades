@@ -2,7 +2,7 @@
   <div id="app">
     <b-modal ref="nickname-modal" id="modal-scrollable" scrollable no-close-on-esc no-close-on-backdrop title="Please, provide your username">
       <h6>Please, provide your username!</h6>
-      <b-form-input v-model="username" placeholder="Enter your name"></b-form-input>
+      <b-form-input v-model="username" placeholder="You will be displayed as a Guest"></b-form-input>
     </b-modal>
 
     <b-container class="game__container">

@@ -60,7 +60,7 @@ export default {
   },
   watch: {
       username: function(newVal){
-          this.user = newVal;
+          this.user = newVal ? newVal : 'Guest';
       }
   }
 }
