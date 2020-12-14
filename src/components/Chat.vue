@@ -31,29 +31,24 @@
 </template>
 
 <script>
+import io from  'socket.io-client';
 export default {
   name: 'Chat',
   data() {
       return {
-        fields: [
-            {
-                key: 'points',
-                sortable: true,
-                theadClass: 'chat__system--points'
-            }
-        ],
-        messages: [
-          { points: 40, nickname: 'Dickerson', message: 'Macdonald' },
-          { points: 40, nickname: 'Dickerson', message: 'Macdonald' },
-          { points: 40, nickname: 'Dickerson', message: 'Macdonald' },
-          { points: 40, nickname: 'Dickerson', message: 'Macdonald' },
-          { points: 40, nickname: 'Dickerson', message: 'Macdonald' },
-          { points: 40, nickname: 'Dickerson', message: 'Macdonald' },
-        ]
+        user: '',
+        message: '',
+        messages: [],
+        socket: io('http://localhost:3001')
       }
   },  
-  props: {
-    msg: String
+  methods: {
+      sendMessage(e){
+          e.preventDefault();
+      }
+  },
+  mounted(){
+      console.log('y!')
   }
 }
 </script>

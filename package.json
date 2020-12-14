@@ -16,6 +16,7 @@
     "portal-vue": "^2.1.7",
     "qrious": "^4.0.2",
     "sass-loader": "^10.1.0",
+    "socket.io-client": "^3.0.4",
     "vue": "^2.6.11",
     "vueface": "^1.0.1"
   },
