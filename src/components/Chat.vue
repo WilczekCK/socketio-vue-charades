@@ -18,7 +18,7 @@
             <b-table striped sticky-header small :items="messages" style="max-height:130px;"></b-table>
             <b-row>
                 <b-col cols="12">
-                <b-form-input v-model="text" placeholder="Enter your message"></b-form-input>
+                <b-form-input v-model="message" placeholder="Enter your message" @keyup.enter="sendMessage()"></b-form-input>
                 </b-col>
 
                 <b-col>
@@ -43,12 +43,19 @@ export default {
       }
   },  
   methods: {
-      sendMessage(e){
-          e.preventDefault();
+      sendMessage(){
+          this.socket.emit('SEND_MESSAGE', {
+              user: 'Test user',
+              message: this.message
+          });
+
+          this.message = '';
       }
   },
   mounted(){
-      console.log('y!')
+      this.socket.on("MESSAGE", (data) => {
+          this.messages = [...this.messages, data];
+      })
   }
 }
 </script>
