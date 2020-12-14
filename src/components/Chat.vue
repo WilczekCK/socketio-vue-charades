@@ -34,9 +34,10 @@
 import io from  'socket.io-client';
 export default {
   name: 'Chat',
+  props: ['username'],
   data() {
       return {
-        user: '',
+        user: this.username,
         message: '',
         messages: [],
         socket: io('http://localhost:3001')
@@ -45,7 +46,7 @@ export default {
   methods: {
       sendMessage(){
           this.socket.emit('SEND_MESSAGE', {
-              user: 'Test user',
+              user: this.user,
               message: this.message
           });
 
@@ -56,6 +57,11 @@ export default {
       this.socket.on("MESSAGE", (data) => {
           this.messages = [...this.messages, data];
       })
+  },
+  watch: {
+      username: function(newVal){
+          this.user = newVal;
+      }
   }
 }
 </script>
