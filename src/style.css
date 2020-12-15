@@ -35,6 +35,11 @@
 
 .chat__system div:first-of-type{
     margin-bottom:0px;
+    max-height: 130px;
+}
+
+.chat__system div:first-of-type table{
+    height:100%;
 }
 
 .chat__system th:first-of-type{

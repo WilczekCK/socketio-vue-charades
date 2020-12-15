@@ -3,10 +3,10 @@
         <b-container class="chat__menu">
             <b-row>
                 <b-col>
-                      <b-button block variant="primary">Change nickname</b-button>
+                      <b-button block variant="primary">I want draw</b-button>
                 </b-col>
                 <b-col>
-                      <b-button block variant="primary">Ask for help</b-button>
+                      <b-button block variant="primary">Ask for tip</b-button>
                 </b-col>
                 <b-col>
                       <b-button block variant="primary">FAQ</b-button>
@@ -15,7 +15,7 @@
         </b-container>
 
         <b-container fluid class="chat__system">
-            <b-table striped sticky-header small :items="messages" style="max-height:130px;"></b-table>
+            <b-table striped sticky-header small :items="messages"></b-table>
             <b-row>
                 <b-col cols="12">
                 <b-form-input v-model="message" placeholder="Enter your message" @keyup.enter="sendMessage()"></b-form-input>
@@ -34,12 +34,13 @@
 import io from  'socket.io-client';
 export default {
   name: 'Chat',
-  props: ['username'],
+  props: ['loginData'],
   data() {
       return {
-        user: this.username,
+        user: 'guest',//this.username,
         message: '',
         messages: [],
+        loginCred: this.loginData,
         socket: io('http://localhost:3001')
       }
   },  
@@ -59,8 +60,12 @@ export default {
       })
   },
   watch: {
-      username: function(newVal){
-          this.user = newVal ? newVal : 'Guest';
+      loginCred: function(newVal){
+          console.log(newVal)
+        if(newVal.isWritingFinished){
+            this.user = newVal.username ? newVal.username : 'Guest';
+            this.messages = [...this.messages, {user:'System', message:`Hello ${this.user}, there is 0 players online`} ];
+        }
       }
   }
 }
