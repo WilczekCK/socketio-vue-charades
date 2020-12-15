@@ -10,13 +10,14 @@
       title="Please, provide your username to start the game">
         <b-form-input
           placeholder="You will be displayed as a Guest"
-          v-model="loginData.username">
+          v-model="username">
         </b-form-input>
 
         <b-button 
           @click="finishedWriting" 
           variant="primary"
-          block>
+          block
+          style="margin-top:10px;">
           I want to play! 
         </b-button>
     </b-modal>
@@ -26,7 +27,7 @@
     </b-container>
 
     <b-container class="chat__container">
-      <Chat :loginData="loginData" />
+      <Chat :isUsernameProvided="isUsernameProvided" :username="username" />
     </b-container>
   </div>
 </template>
@@ -39,10 +40,8 @@ export default {
   name: 'app',
   data () {
     return {
-      loginData: {
-        username: 'Guest',
-        isWritingFinished: false,
-      }
+      username: 'Guest',
+      isUsernameProvided: false,
     }
   },
   components: {
@@ -52,7 +51,7 @@ export default {
   methods:{
     finishedWriting: function() {
       this.$refs['nickname-modal'].hide();
-      this.loginData.isWritingFinished = true;
+      this.isUsernameProvided = true;
     }
   },
   mounted() {

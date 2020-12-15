@@ -34,13 +34,12 @@
 import io from  'socket.io-client';
 export default {
   name: 'Chat',
-  props: ['loginData'],
+  props: ['isUsernameProvided', 'username'],
   data() {
       return {
-        user: 'guest',//this.username,
+        user: 'Guest',
         message: '',
         messages: [],
-        loginCred: this.loginData,
         socket: io('http://localhost:3001')
       }
   },  
@@ -60,12 +59,9 @@ export default {
       })
   },
   watch: {
-      loginCred: function(newVal){
-          console.log(newVal)
-        if(newVal.isWritingFinished){
-            this.user = newVal.username ? newVal.username : 'Guest';
-            this.messages = [...this.messages, {user:'System', message:`Hello ${this.user}, there is 0 players online`} ];
-        }
+      isUsernameProvided: function() {
+        this.user = this.username ? this.username : 'Guest';
+        this.messages = [...this.messages, {user:'System', message:`Hello ${this.user}, there is 0 players online`} ];
       }
   }
 }
