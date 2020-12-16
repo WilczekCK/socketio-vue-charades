@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const playerList = [];
+let playerList = [];
 
 server = app.listen(3001, function(){
     console.log('server is running on port 3001')
@@ -16,11 +16,15 @@ const io = require('socket.io')(server, {
 
 io.on('connection', function(socket){
     console.log(`User ${socket.id} connected`)
-    let actualConnected = socket.id;
+    let actualConnected = {id: socket.id};
     playerList.push(actualConnected);
 
     socket.on("SEND_MESSAGE", function(data){
         io.emit("MESSAGE", data);
+    })
+
+    socket.on("PLAYER_LIST", (callback) => {
+        callback(playerList);
     })
 
 

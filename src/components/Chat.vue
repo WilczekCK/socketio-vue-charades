@@ -40,6 +40,7 @@ export default {
         user: 'Guest',
         message: '',
         messages: [],
+        playerList: [],
         socket: io('http://localhost:3001')
       }
   },  
@@ -51,17 +52,22 @@ export default {
           });
 
           this.message = '';
+      },
+      updatePlayerList: async function(){
+        await this.socket.emit('PLAYER_LIST', (response) => {
+            this.playerList = response;
+        })
       }
   },
-  mounted(){
+  mounted: function (){
       this.socket.on("MESSAGE", (data) => {
-          this.messages = [...this.messages, data];
+        this.messages = [...this.messages, data];
       })
   },
   watch: {
       isUsernameProvided: function() {
         this.user = this.username ? this.username : 'Guest';
-        this.messages = [...this.messages, {user:'System', message:`Hello ${this.user}, there is 0 players online`} ];
+        this.updatePlayerList();
       }
   }
 }
