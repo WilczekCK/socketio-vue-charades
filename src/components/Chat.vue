@@ -20,7 +20,7 @@
         <b-container fluid class="chat__system">
             <ul>
                 <li class="chat__system__message" :class="{isSystem: message.system }" v-for="message in messages" :key="message">
-                   {{message.user}} : {{message.text}}
+                   <span class="chat__system__message__user">{{message.user}}</span> : {{message.text}}
                 </li> 
             </ul>
             <b-row>

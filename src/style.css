@@ -33,23 +33,29 @@
     padding-right:0px;
 }
 
-.chat__system div:first-of-type{
-    margin-bottom:0px;
-    max-height: 130px;
+.chat__system ul{
+    height:140px;
+    margin:0;
+    padding:0;
+    overflow:scroll;
 }
 
-.chat__system div:first-of-type table{
-    height:100%;
+.chat__system .chat__system__message{
+    list-style: none;
+    display:flex;
+    flex-direction: row;
+    justify-content:flex-start;
+    padding:3.5px;
+    padding-left:7.5px;
 }
 
-.chat__system th:first-of-type{
-    width:50px;
+.chat__system .chat__system__message.isSystem{
+    background-color:rgba(255,0,0,0.2);
 }
 
-.chat__system th:nth-of-type(2){
-    width:100px;
+.chat__system .chat__system__message .chat__system__message__user{
+    font-weight:600;
 }
-
 
 .game__container{
     background:white;
