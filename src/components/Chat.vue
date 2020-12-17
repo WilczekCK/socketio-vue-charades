@@ -25,7 +25,7 @@
                 </b-col>
 
                 <b-col>
-                <b-button block variant="primary">SEND</b-button>
+                <b-button block variant="primary" @click="systemMessage()">SEND</b-button>
                 </b-col>
             </b-row>
             
@@ -61,6 +61,12 @@ export default {
 
           this.message = '';
       },
+      systemMessage(){
+        this.socket.emit('OS_MESSAGE', {
+              user: "Administrator",
+              message: "TEST"
+        });
+      },
       updatePlayerList: async function(){
         await this.socket.emit('PLAYER_LIST', (response) => {
             this.playerList = response;
@@ -81,7 +87,7 @@ export default {
         }, this.playerConnectedTimeout)
     })
     this.socket.on("SYSTEM_MESSAGE", (data) => {
-        this.messages = [...this.messages, data];
+        this.messages = [...this.messages, {...data, SYSTEM:"SYSTEM"}];
     })
   },
   watch: {
