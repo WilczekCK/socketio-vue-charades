@@ -18,7 +18,11 @@
         </b-container>
 
         <b-container fluid class="chat__system">
-            <b-table striped sticky-header small :items="messages"></b-table>
+            <ul>
+                <li class="chat__system__message" :class="{isSystem: message.system }" v-for="message in messages" :key="message">
+                   {{message.user}} : {{message.text}}
+                </li> 
+            </ul>
             <b-row>
                 <b-col cols="12">
                 <b-form-input v-model="message" placeholder="Enter your message" @keyup.enter="sendMessage()"></b-form-input>
@@ -56,15 +60,15 @@ export default {
       sendMessage(){
           this.socket.emit('SEND_MESSAGE', {
               user: this.user,
-              message: this.message
+              text: this.message
           });
 
           this.message = '';
       },
       systemMessage(){
         this.socket.emit('OS_MESSAGE', {
-              user: "Administrator",
-              message: "TEST"
+              user: "SYSTEM",
+              text: "TEST"
         });
       },
       updatePlayerList: async function(){
@@ -87,7 +91,7 @@ export default {
         }, this.playerConnectedTimeout)
     })
     this.socket.on("SYSTEM_MESSAGE", (data) => {
-        this.messages = [...this.messages, {...data, SYSTEM:"SYSTEM"}];
+        this.messages = [...this.messages, {...data, system:true}];
     })
   },
   watch: {
