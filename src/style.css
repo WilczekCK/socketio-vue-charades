@@ -37,7 +37,7 @@
     height:140px;
     margin:0;
     padding:0;
-    overflow:scroll;
+    overflow:auto;
 }
 
 .chat__system .chat__system__message{
