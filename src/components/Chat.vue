@@ -1,21 +1,6 @@
 <template>
     <b-container fluid class="chat__wrapper">
-        <b-container class="chat__menu">
-            <b-row>
-                <b-tooltip :show.sync="show" placement="top" target="show_players_button">
-                    <strong>{{recentPlayer}}</strong> comes to play!
-                </b-tooltip>
-                <b-col>
-                      <b-button block variant="primary">I want draw</b-button>
-                </b-col>
-                <b-col>
-                      <b-button id="show_players_button" block variant="primary">Players online</b-button>
-                </b-col>
-                <b-col>
-                      <b-button block variant="primary">FAQ</b-button>
-                </b-col>
-            </b-row>
-        </b-container>
+        <ButtonsAboveChat />
 
         <b-container fluid class="chat__system">
             <ul>
@@ -39,9 +24,13 @@
 
 <script>
 import io from  'socket.io-client';
+import ButtonsAboveChat from './ButtonsAboveChat';
 //import _ from 'underscore';
 export default {
   name: 'Chat',
+  components: {
+      ButtonsAboveChat
+  },
   props: ['isUsernameProvided', 'username'],
   data() {
       return {
