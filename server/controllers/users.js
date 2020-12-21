@@ -23,9 +23,7 @@ const userIO = {
             type:'joined__message'
         })
 
-        io.emit("PLAYER_CONNECTED_INFO", username);
         io.emit("PLAYER_LIST_UPDATE");
-
     },
     onDisconnect: (id) => {
         console.log(`User ${id} disconnected`)
