@@ -53,15 +53,6 @@ export default {
     this.socket.on("MESSAGE", (data) => {
         this.messages = [...this.messages, data];
     })
-    this.socket.on("PLAYER_CONNECTED_INFO", async (data) => {
-        //TODO -- EACH TOOLTIP FOR CONNECTED USER AT THE SAME TIME
-        this.show = true;
-        this.recentPlayer = data;
-
-        setTimeout(() => {
-            this.show = false;
-        }, this.playerConnectedTimeout)
-    })
     this.socket.on("SYSTEM_MESSAGE", (data) => {
           this.socket.emit('SEND_MESSAGE', {
               username: this.user,
