@@ -2,6 +2,7 @@ const server = require('./server');
 server;
 
 const users = require('./controllers/users');
+const chat = require('./controllers/chat');
 const io = require('./socket');
 
 let playerList = {};
@@ -12,11 +13,11 @@ io.on('connection', function(socket){
     })
 
     socket.on("SEND_MESSAGE", function(data){
-        io.emit("MESSAGE", data);
+        chat.onSend(data);
     })
 
     socket.on("OS_MESSAGE", function (data){
-        io.emit("SYSTEM_MESSAGE", data);
+        chat.onSend(data);
     })
 
     socket.on("PLAYER_LIST", (callback) => {
