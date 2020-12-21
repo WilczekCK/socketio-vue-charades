@@ -14,8 +14,6 @@ io.on('connection', function(socket){
         playerList[socket.id].username = data;
         users.onConnect(socket.id, data);
 
-        io.emit("PLAYER_CONNECTED_INFO", data);
-        io.emit("PLAYER_LIST_UPDATE");
     })
 
     socket.on("SEND_MESSAGE", function(data){
@@ -31,10 +29,6 @@ io.on('connection', function(socket){
     })
 
     socket.on('disconnect', () => {
-        console.log(`User ${socket.id} disconnected`)
-
-        //Remove user from the array
-        delete playerList[socket.id];
-        io.emit("PLAYER_LIST_UPDATE");
+        users.onDisconnect(socket.id);
     })
 })
