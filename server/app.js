@@ -5,7 +5,6 @@ const users = require('./controllers/users');
 const chat = require('./controllers/chat');
 const io = require('./socket');
 
-let playerList = {};
 io.on('connection', function(socket){
 
     socket.on("PLAYER_CONNECTED", function(username){
@@ -21,7 +20,7 @@ io.on('connection', function(socket){
     })
 
     socket.on("PLAYER_LIST", (callback) => {
-        callback(playerList);
+        callback(users.getPlayerList());
     })
 
     socket.on('disconnect', () => {
