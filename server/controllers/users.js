@@ -12,6 +12,8 @@ let onlineList = [];
 const userIO = {
     User: (id, username, points) => new User(id, username, points),
     onConnect: (id, username) => {
+        console.log(`User ${id} connected`)
+
         onlineList = [...onlineList, new User(id, username, 0)];
 
         io.emit('SYSTEM_MESSAGE', {
@@ -32,8 +34,6 @@ const userIO = {
         onlineList = onlineList.filter(function(player) {
             return player.id !== id;
         })
-
-        console.log(onlineList)
     }
 }
 
