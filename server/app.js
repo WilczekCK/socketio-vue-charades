@@ -1,13 +1,10 @@
-const express = require('express');
-const app = express();
+const server = require('./server');
+server;
 
-server = app.listen(3001, function(){
-    console.log('server is running on port 3001')
-});
-
-let playerList = {};
+const users = require('./controllers/users');
 const io = require('./socket');
 
+let playerList = {};
 io.on('connection', function(socket){
     playerList[socket.id] = { id: socket.id, username: undefined };
 
@@ -15,15 +12,10 @@ io.on('connection', function(socket){
 
     socket.on("PLAYER_CONNECTED", function(data){
         playerList[socket.id].username = data;
+        users.onConnect(socket.id, data);
 
         io.emit("PLAYER_CONNECTED_INFO", data);
         io.emit("PLAYER_LIST_UPDATE");
-
-        io.emit('SYSTEM_MESSAGE', {
-            user: playerList[socket.id].username,
-            text: `just joined! Say Hi to him :)`,
-            role:'joined_info'
-        })
     })
 
     socket.on("SEND_MESSAGE", function(data){
