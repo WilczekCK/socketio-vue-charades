@@ -20,10 +20,12 @@ io.on('connection', function(socket){
 
     socket.on("PLAYER_CONNECTED", function(data){
         io.emit("PLAYER_CONNECTED_INFO", data);
+        playerList[socket.id].nickname = data;
     })
 
     socket.on("PLAYER_USERNAME_SET", function(data){
-        
+        console.log(data);
+ 
     })
 
     socket.on("SEND_MESSAGE", function(data){
