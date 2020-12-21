@@ -1,17 +1,13 @@
 const express = require('express');
 const app = express();
+
 let playerList = {};
+
 server = app.listen(3001, function(){
     console.log('server is running on port 3001')
 });
 
-const io = require('socket.io')(server, {
-    cors: {
-        origins: "localhost:8081",
-        methods: ["GET", "POST"]
-    }
-});
-
+const io = require('./socket');
 
 io.on('connection', function(socket){
     playerList[socket.id] = { id: socket.id, username: undefined };
