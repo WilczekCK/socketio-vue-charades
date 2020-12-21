@@ -1,8 +1,6 @@
 <template>
         <b-container class="chat__menu">
             <b-row>
-                <b-tooltip :show.sync="show" placement="top" target="show_players_button">
-                </b-tooltip>
                 <b-col>
                       <b-button block variant="primary">I want draw</b-button>
                 </b-col>
@@ -14,7 +12,7 @@
                             <b-spinner variant="primary" label="Spinning"></b-spinner>
                         </div>
                         <ul class="chat__menu__playerList" v-else>
-                            <li v-for="player in playerList" :key='player.id'>{{player.nickname}}</li>                        </ul>
+                            <li v-for="player in playerList" :key='player.id'>{{player.username}}</li>                        </ul>
                     </b-popover>
                 </b-col>
                 <b-col>

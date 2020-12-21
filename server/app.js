@@ -14,17 +14,21 @@ const io = require('socket.io')(server, {
 
 
 io.on('connection', function(socket){
-    playerList[socket.id] = { id: socket.id, nickname: undefined };
+    playerList[socket.id] = { id: socket.id, username: undefined };
 
     console.log(`User ${socket.id} connected`)
 
     socket.on("PLAYER_CONNECTED", function(data){
-        playerList[socket.id].nickname = data;
+        playerList[socket.id].username = data;
 
         io.emit("PLAYER_CONNECTED_INFO", data);
         io.emit("PLAYER_LIST_UPDATE");
-        
-        socket.emit('OS_MESSAGE', playerList[socket.id])
+
+        io.emit('SYSTEM_MESSAGE', {
+            user: playerList[socket.id].username,
+            text: `just joined! Say Hi to him :)`,
+            role:'joined_info'
+        })
     })
 
     socket.on("SEND_MESSAGE", function(data){

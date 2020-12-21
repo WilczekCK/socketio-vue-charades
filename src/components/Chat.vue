@@ -4,7 +4,7 @@
 
         <b-container fluid class="chat__system">
             <ul>
-                <li class="chat__system__message" :class="{isSystem: message.system }" v-for="message in messages" :key="message">
+                <li class="chat__system__message" :class="{isSystem: message.system, [message.role]: message.role}" v-for="message in messages" :key="message">
                    <span class="chat__system__message__user">{{message.user}}</span> : {{message.text}}
                 </li> 
             </ul>
@@ -14,7 +14,7 @@
                 </b-col>
 
                 <b-col>
-                <b-button block variant="primary" @click="systemMessage()">SEND</b-button>
+                <b-button block variant="primary">SEND</b-button>
                 </b-col>
             </b-row>
             
@@ -36,10 +36,6 @@ export default {
         user: 'Guest',
         message: '',
         messages: [],
-        show: false,
-
-        recentPlayer: undefined,
-        playerConnectedTimeout: 5000,
       }
   },  
   methods: {
@@ -50,13 +46,7 @@ export default {
           });
 
           this.message = '';
-      },
-      systemMessage(){
-        this.socket.emit('OS_MESSAGE', {
-              user: "SYSTEM",
-              text: "TEST"
-        });
-      },
+      }
   },
   mounted: function (){
     this.socket.on("MESSAGE", (data) => {
@@ -72,7 +62,7 @@ export default {
         }, this.playerConnectedTimeout)
     })
     this.socket.on("SYSTEM_MESSAGE", (data) => {
-        this.messages = [...this.messages, {...data, system:true}];
+        this.messages = [...this.messages, {...data, role:data.role}];
     })
   },
   watch: {
