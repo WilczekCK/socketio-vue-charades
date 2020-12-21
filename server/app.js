@@ -10,9 +10,9 @@ io.on('connection', function(socket){
 
     console.log(`User ${socket.id} connected`)
 
-    socket.on("PLAYER_CONNECTED", function(data){
-        playerList[socket.id].username = data;
-        users.onConnect(socket.id, data);
+    socket.on("PLAYER_CONNECTED", function(username){
+        playerList[socket.id].username = username;
+        users.onConnect(socket.id, username);
 
     })
 

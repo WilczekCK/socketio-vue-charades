@@ -11,16 +11,16 @@ class User{
 let onlineList = [];
 const userIO = {
     User: (id, username, points) => new User(id, username, points),
-    onConnect: (id, data) => {
-        onlineList = [...onlineList, new User(id, data, 0)];
+    onConnect: (id, username) => {
+        onlineList = [...onlineList, new User(id, username, 0)];
 
         io.emit('SYSTEM_MESSAGE', {
-            user: data,
+            user: username,
             text: `just joined! Say Hi to him :)`,
             role:'joined_info'
         })
 
-        io.emit("PLAYER_CONNECTED_INFO", data);
+        io.emit("PLAYER_CONNECTED_INFO", username);
         io.emit("PLAYER_LIST_UPDATE");
 
     },
