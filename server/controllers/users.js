@@ -17,10 +17,10 @@ const userIO = {
 
         onlineList = [...onlineList, new User(id, username, 0)];
 
-        io.emit('SYSTEM_MESSAGE', {
-            user: username,
+        io.emit('MESSAGE', {
+            username: username,
             message: 'just joined! Say "Hi!" to welcome new player :)',
-            role:'joined_info'
+            type:'joined__message'
         })
 
         io.emit("PLAYER_CONNECTED_INFO", username);

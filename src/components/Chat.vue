@@ -53,15 +53,6 @@ export default {
     this.socket.on("MESSAGE", (data) => {
         this.messages = [...this.messages, data];
     })
-    this.socket.on("SYSTEM_MESSAGE", (data) => {
-          this.socket.emit('SEND_MESSAGE', {
-              username: this.user,
-              message: 'just joined! Say "Hi!" to welcome new player :)',
-              type: 'joined__message'
-          });
-
-          this.message = '';
-    })
   },
   watch: {
       isUsernameProvided: function() {
