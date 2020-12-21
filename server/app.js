@@ -32,7 +32,6 @@ io.on('connection', function(socket){
     })
 
     socket.on("PLAYER_LIST", (callback) => {
-        console.log(playerList)
         callback(playerList);
     })
 

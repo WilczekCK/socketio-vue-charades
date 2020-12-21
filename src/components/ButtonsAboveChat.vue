@@ -10,10 +10,10 @@
                       <b-button id="show_players_button" block variant="primary" @mouseup="updatePlayerList()">Players online</b-button>
                         <b-popover target="show_players_button" variant="primary" triggers="click" placement="top">
                         <template #title>Players online list</template>
-                        <div v-if="playerList.length === 0">
+                        <div class="chat__menu__playerList" v-if="playerList.length === 0">
                             <b-spinner variant="primary" label="Spinning"></b-spinner>
                         </div>
-                        <ul v-else>
+                        <ul class="chat__menu__playerList" v-else>
                             <li v-for="player in playerList" :key='player.id'>{{player.id}}</li>                        </ul>
                     </b-popover>
                 </b-col>
@@ -51,9 +51,7 @@ export default {
       }
   },
   mounted: function (){
-    //this.socket.on("PLAYER_LIST", (data) => {
-      //  this.playerList = data;
-    //})
+
   },
 
 }

@@ -25,6 +25,14 @@
     right:0;
 }
 
+div.chat__menu__playerList{
+    text-align:center;
+}
+
+ul.chat__menu__playerList{
+    padding:0px 10px;
+}
+
 .chat__system{
     max-width:100%;
     width:100%;
