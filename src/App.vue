@@ -27,7 +27,7 @@
     </b-container>
 
     <b-container class="chat__container">
-      <Chat :isUsernameProvided="isUsernameProvided" :username="username" />
+      <Chat :isUsernameProvided="isUsernameProvided" :username="username" :socket='socket' />
     </b-container>
   </div>
 </template>
@@ -35,11 +35,13 @@
 <script>
 import Chat from './components/Chat.vue'
 import Game from './components/Game.vue'
+import io from  'socket.io-client';
 
 export default {
   name: 'app',
   data () {
     return {
+      socket: io('http://localhost:3001'),
       username: 'Guest',
       isUsernameProvided: false,
     }

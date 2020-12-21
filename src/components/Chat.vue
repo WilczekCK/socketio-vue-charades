@@ -1,6 +1,6 @@
 <template>
     <b-container fluid class="chat__wrapper">
-        <ButtonsAboveChat />
+        <ButtonsAboveChat :socket="socket"/>
 
         <b-container fluid class="chat__system">
             <ul>
@@ -23,7 +23,6 @@
 </template>
 
 <script>
-import io from  'socket.io-client';
 import ButtonsAboveChat from './ButtonsAboveChat';
 //import _ from 'underscore';
 export default {
@@ -31,14 +30,13 @@ export default {
   components: {
       ButtonsAboveChat
   },
-  props: ['isUsernameProvided', 'username'],
+  props: ['isUsernameProvided', 'username', 'socket'],
   data() {
       return {
         user: 'Guest',
         message: '',
         messages: [],
         playerList: [],
-        socket: io('http://localhost:3001'),
         show: false,
 
         recentPlayer: undefined,

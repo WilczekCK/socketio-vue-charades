@@ -32,13 +32,12 @@
 </template>
 
 <script>
-import io from  'socket.io-client';
 export default {
     //<strong>{{recentPlayer}}</strong> comes to play!
   name: 'ButtonsAboveChat',
+  props: ['socket'],
   data() {
       return {
-          socket: io('http://localhost:3001'),
           playerList: [],
           loading: false,
       }
