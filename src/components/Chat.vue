@@ -4,8 +4,8 @@
 
         <b-container fluid class="chat__system">
             <ul>
-                <li class="chat__system__message" :class="{isSystem: message.system, [message.role]: message.role}" v-for="message in messages" :key="message">
-                   <span class="chat__system__message__user">{{message.user}}</span> : {{message.text}}
+                <li class="chat__system__message" :class="{[message.type]: message.type}" v-for="message in messages" :key="message">
+                   <span class="chat__system__message__user">{{message.username}}</span> : {{message.message}}
                 </li> 
             </ul>
             <b-row>
@@ -41,8 +41,9 @@ export default {
   methods: {
       sendMessage(){
           this.socket.emit('SEND_MESSAGE', {
-              user: this.user,
-              text: this.message
+              username: this.user,
+              message: this.message,
+              type: 'regular__message'
           });
 
           this.message = '';
@@ -62,7 +63,13 @@ export default {
         }, this.playerConnectedTimeout)
     })
     this.socket.on("SYSTEM_MESSAGE", (data) => {
-        this.messages = [...this.messages, {...data, role:data.role}];
+          this.socket.emit('SEND_MESSAGE', {
+              username: this.user,
+              message: 'just joined! Say "Hi!" to welcome new player :)',
+              type: 'joined__message'
+          });
+
+          this.message = '';
     })
   },
   watch: {

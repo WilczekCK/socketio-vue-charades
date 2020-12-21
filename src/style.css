@@ -59,11 +59,11 @@ ul.chat__menu__playerList{
     padding-left:7.5px;
 }
 
-.chat__system .chat__system__message.isSystem{
+.chat__system .chat__system__message.system__message{
     background-color:rgba(255,0,0,0.2);
 }
 
-.chat__system .chat__system__message.joined_info{
+.chat__system .chat__system__message.joined__message{
     background-color:rgba(0,255,0,0.2);
 }
 
