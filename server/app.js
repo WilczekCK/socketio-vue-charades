@@ -1,12 +1,11 @@
 const express = require('express');
 const app = express();
 
-let playerList = {};
-
 server = app.listen(3001, function(){
     console.log('server is running on port 3001')
 });
 
+let playerList = {};
 const io = require('./socket');
 
 io.on('connection', function(socket){
