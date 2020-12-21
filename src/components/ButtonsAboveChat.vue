@@ -50,7 +50,9 @@ export default {
       }
   },
   mounted: function (){
-
+      this.socket.on('PLAYER_LIST_UPDATE', () => {
+        this.updatePlayerList();    
+      })
   },
 
 }

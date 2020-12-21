@@ -19,8 +19,10 @@ io.on('connection', function(socket){
     console.log(`User ${socket.id} connected`)
 
     socket.on("PLAYER_CONNECTED", function(data){
-        io.emit("PLAYER_CONNECTED_INFO", data);
         playerList[socket.id].nickname = data;
+        
+        io.emit("PLAYER_CONNECTED_INFO", data);
+        io.emit("PLAYER_LIST_UPDATE");
     })
 
     socket.on("PLAYER_USERNAME_SET", function(data){
@@ -45,5 +47,6 @@ io.on('connection', function(socket){
 
         //Remove user from the array
         delete playerList[socket.id];
+        io.emit("PLAYER_LIST_UPDATE");
     })
 })
