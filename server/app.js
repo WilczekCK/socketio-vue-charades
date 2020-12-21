@@ -1,7 +1,6 @@
 const express = require('express');
 const app = express();
-let playerList = [];
-
+let playerList = {};
 server = app.listen(3001, function(){
     console.log('server is running on port 3001')
 });
@@ -15,12 +14,16 @@ const io = require('socket.io')(server, {
 
 
 io.on('connection', function(socket){
-    let actualConnected = {id: socket.id};
-    playerList.push(actualConnected);
+    playerList[socket.id] = { id: socket.id, nickname: undefined };
+
     console.log(`User ${socket.id} connected`)
 
     socket.on("PLAYER_CONNECTED", function(data){
         io.emit("PLAYER_CONNECTED_INFO", data);
+    })
+
+    socket.on("PLAYER_USERNAME_SET", function(data){
+        
     })
 
     socket.on("SEND_MESSAGE", function(data){
@@ -39,8 +42,6 @@ io.on('connection', function(socket){
         console.log(`User ${socket.id} disconnected`)
 
         //Remove user from the array
-        playerList = playerList.filter(function(player){
-            return player.id !== socket.id
-        })
+        delete playerList[socket.id];
     })
 })
