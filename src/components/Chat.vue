@@ -36,7 +36,6 @@ export default {
         user: 'Guest',
         message: '',
         messages: [],
-        playerList: [],
         show: false,
 
         recentPlayer: undefined,
@@ -57,11 +56,6 @@ export default {
               user: "SYSTEM",
               text: "TEST"
         });
-      },
-      updatePlayerList: async function(){
-        await this.socket.emit('PLAYER_LIST', (response) => {
-            this.playerList = response;
-        })
       },
   },
   mounted: function (){
@@ -85,7 +79,6 @@ export default {
       isUsernameProvided: function() {
         this.user = this.username ? this.username : 'Guest';
         this.socket.emit('PLAYER_CONNECTED', this.user);
-        this.updatePlayerList();
       }
   }
 }
