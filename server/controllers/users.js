@@ -29,12 +29,12 @@ const userIO = {
     },
     onDisconnect: (id) => {
         console.log(`User ${id} disconnected`)
-        
-        io.emit("PLAYER_LIST_UPDATE");
 
         onlineList = onlineList.filter(function(player) {
             return player.id !== id;
         })
+
+        io.emit("PLAYER_LIST_UPDATE");
     }
 }
 
