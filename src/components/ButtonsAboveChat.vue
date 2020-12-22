@@ -5,7 +5,7 @@
                       <b-button block variant="primary">I want draw</b-button>
                 </b-col>
                 <b-col>
-                      <b-button id="show_players_button" block variant="primary" @mouseup="updatePlayerList()">Players online</b-button>
+                      <b-button id="show_players_button" block variant="primary">Players online ({{playerList.length}})</b-button>
                         <b-popover target="show_players_button" variant="primary" triggers="click" placement="top">
                         <template #title>Players online list</template>
                         <div class="chat__menu__playerList" v-if="playerList.length === 0">
@@ -40,17 +40,10 @@ export default {
       }
   },  
   methods: {
-      updatePlayerList(){
-        this.socket.emit('PLAYER_LIST', (callback) => {
-            console.log(callback);
-            this.playerList = callback;
-        })
-      }
+
   },
   mounted: function (){
-      this.socket.on('PLAYER_LIST_UPDATE', () => {
-        this.updatePlayerList();    
-      })
+
   },
 
 }

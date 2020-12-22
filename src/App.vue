@@ -23,7 +23,7 @@
     </b-modal>
 
     <b-container class="game__container">
-      <Game />
+      <Game :socket="socket" :playerList="playerList"/>
     </b-container>
 
     <b-container class="chat__container">
@@ -55,10 +55,19 @@ export default {
     finishedWriting: function() {
       this.$refs['nickname-modal'].hide();
       this.isUsernameProvided = true;
+    },
+    updatePlayerList(){
+        this.socket.emit('PLAYER_LIST', (callback) => {
+            console.log(callback);
+            this.playerList = callback;
+        })
     }
   },
   mounted() {
     this.$refs['nickname-modal'].show();
+    this.socket.on('PLAYER_LIST_UPDATE', () => {
+      this.updatePlayerList();    
+    })
   }
 }
 </script>
