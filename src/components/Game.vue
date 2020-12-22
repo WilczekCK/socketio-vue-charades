@@ -32,15 +32,11 @@ export default {
     }
   },
   mounted: function(){
-
+    this.socket.on('ROLL_PLAYER', () => {
+      this.selectDrawingPlayer();
+    })
   },
   watch:{
-    playerList: function(){
-      if(this.playerList.length > 1 && !this.isDrawing){
-        this.socket.emit('ROLL_PLAYER');
-        this.selectDrawingPlayer();
-      }
-    }
   }
 }
 </script>
