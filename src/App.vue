@@ -27,7 +27,7 @@
     </b-container>
 
     <b-container class="chat__container">
-      <Chat :isUsernameProvided="isUsernameProvided" :username="username" :socket='socket' />
+      <Chat :isUsernameProvided="isUsernameProvided" :username="username" :socket='socket' :playerList="playerList" />
     </b-container>
   </div>
 </template>
@@ -44,6 +44,7 @@ export default {
       socket: io('http://localhost:3001'),
       username: 'Guest',
       isUsernameProvided: false,
+      playerList: [],
     }
   },
   components: {

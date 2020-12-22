@@ -1,6 +1,6 @@
 <template>
     <b-container fluid class="chat__wrapper">
-        <ButtonsAboveChat :socket="socket"/>
+        <ButtonsAboveChat :socket="socket" :playerList="playerList"/>
 
         <b-container fluid class="chat__system">
             <ul>
@@ -30,7 +30,7 @@ export default {
   components: {
       ButtonsAboveChat
   },
-  props: ['isUsernameProvided', 'username', 'socket'],
+  props: ['isUsernameProvided', 'username', 'socket', 'playerList'],
   data() {
       return {
         user: 'Guest',
