@@ -21,20 +21,14 @@ export default {
     }
   },
   methods: {
-    getRandomPlayer(obj){
-      let keys = Object.keys(obj);
-      return obj[keys[ keys.length * Math.random() << 0]];
-    },
     selectDrawingPlayer(){
-      this.drawingPlayer = this.getRandomPlayer(this.playerList);
-
-      this.socket.emit('SEND_MESSAGE', {
-        username: "GAME",
-        message: `Player which will draw is: ${this.drawingPlayer.username}, wait till he select the word!`,
-        type: 'system__message'
-      });
-      
+      this.getDrawingPlayer();
       this.isDrawing = true;
+    },
+    getDrawingPlayer(){
+      this.socket.emit('LOAD_DRAWING_PLAYER', (callback) => {
+        this.drawingPlayer = callback;
+      })
     }
   },
   mounted: function(){
@@ -43,6 +37,7 @@ export default {
   watch:{
     playerList: function(){
       if(this.playerList.length > 1 && !this.isDrawing){
+        this.socket.emit('ROLL_PLAYER');
         this.selectDrawingPlayer();
       }
     }

@@ -3,6 +3,8 @@ server;
 
 const users = require('./controllers/users');
 const chat = require('./controllers/chat');
+const game = require('./controllers/game');
+
 const io = require('./socket');
 
 io.on('connection', function(socket){
@@ -21,6 +23,19 @@ io.on('connection', function(socket){
 
     socket.on("PLAYER_LIST", (callback) => {
         callback(users.getPlayerList());
+    })
+
+    socket.on("ROLL_PLAYER", () => {
+        game.rollPlayer();
+        chat.onSend({
+            username: 'GAME',
+            message: `Player which will draw is: ${game.drawingPlayer.username}, wait till he select the word!`,
+            type: 'system__message'
+        })
+    })
+
+    socket.on("LOAD_DRAWING_PLAYER", (callback) => {
+        callback(game.drawingPlayer);
     })
 
     socket.on('disconnect', () => {

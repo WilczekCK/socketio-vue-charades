@@ -58,7 +58,6 @@ export default {
     },
     updatePlayerList(){
         this.socket.emit('PLAYER_LIST', (callback) => {
-            console.log(callback);
             this.playerList = callback;
         })
     }

@@ -33,6 +33,10 @@ const userIO = {
         })
 
         io.emit("PLAYER_LIST_UPDATE");
+    },
+    getRandomPlayer: () => {
+        let keys = Object.keys( onlineList );
+        return onlineList[keys[ keys.length * Math.random() << 0]];
     }
 }
 
