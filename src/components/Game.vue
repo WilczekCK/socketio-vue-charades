@@ -1,6 +1,21 @@
 <template>
 <div style="height:100%;">
     <h2><b-badge variant="primary">Vue + SocketIO Charades</b-badge></h2>
+    
+    <b-modal ref="word-selector"
+      no-close-on-esc
+      no-close-on-backdrop 
+      hide-header-close 
+      hide-footer 
+      hide-header
+      >
+      <h4>You are selected by system!</h4>
+      <h6>Select what you want to draw:</h6>
+
+      <b-button class="mt-3" variant="success" block @click="hideModal">Cat</b-button>
+      <b-button class="mt-3" variant="warning" block @click="hideModal">Home</b-button>
+      <b-button class="mt-3" variant="danger" block @click="hideModal">Cricket</b-button>
+    </b-modal>
 </div>
 </template>
 
@@ -27,7 +42,12 @@ export default {
     getDrawingPlayer(){
       this.socket.emit('LOAD_DRAWING_PLAYER', (callback) => {
         this.drawingPlayer = callback;
+
+        this.socket.id === this.drawingPlayer.id ? this.selectWord() : 0;
       })
+    },
+    selectWord(){
+      this.$refs['word-selector'].show()
     }
   },
   mounted: function(){
