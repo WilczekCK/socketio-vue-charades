@@ -27,10 +27,6 @@ io.on('connection', function(socket){
         callback(users.getPlayerList());
     })
 
-    socket.on("ROLL_PLAYER", () => {
-        game.rollPlayer();
-    })
-
     socket.on("LOAD_DRAWING_PLAYER", (callback) => {
         callback(game.drawingPlayer);
     })

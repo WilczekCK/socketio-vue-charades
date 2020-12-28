@@ -8,10 +8,12 @@ const gameIO = {
         id: null,
         points: null
     },
+    getDrawingPlayer: () => (function(){return this.drawingPlayer})(),
     isPlayerDrawing: false,
     rollPlayer: function() {
         this.isPlayerDrawing = true;
         this.drawingPlayer = users.getRandomPlayer();
+        io.emit('IS_PLAYER_SELECTED');
 
         chat.onSend({
             username: 'GAME',
@@ -20,8 +22,11 @@ const gameIO = {
         })
 
         setTimeout(function(){
-            isPlayerDrawing = false;
+            this.isPlayerDrawing = false;
         }, 10000)
+    },
+    startRound: function (playerId) {
+        
     }
 }
 

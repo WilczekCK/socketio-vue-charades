@@ -12,7 +12,6 @@ export default {
   data(){
     return {
       isDrawing: false,
-      timeForDrawing: 120, //seconds
       drawingPlayer: {
         username: undefined,
         id: null,
@@ -32,9 +31,11 @@ export default {
     }
   },
   mounted: function(){
-    this.socket.on('ROLL_PLAYER', () => {
-      this.selectDrawingPlayer();
-    })
+    //check while connecting
+    this.getDrawingPlayer();
+    
+    //if connected, and new player is drawing recog
+    this.socket.on('IS_PLAYER_SELECTED', () => this.getDrawingPlayer()); 
   },
   watch:{
   }
