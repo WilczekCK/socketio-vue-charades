@@ -8,10 +8,10 @@ const gameIO = {
         id: null,
         points: null
     },
-    getDrawingPlayer: () => (function(){return this.drawingPlayer})(),
     isPlayerDrawing: false,
     rollPlayer: function() {
         this.drawingPlayer = users.getRandomPlayer();
+        this.isPlayerDrawing = true;
         io.emit('IS_PLAYER_SELECTED');
 
         chat.onSend({
@@ -20,15 +20,33 @@ const gameIO = {
             type: 'system__message'
         })
     },
-    startRound: function (playerId) {
-        this.isPlayerDrawing = true;
+    startRound: function (word) {
         var that = this;
 
         setTimeout(function(){
             that.isPlayerDrawing = false;
             io.emit('NEXT_ROUND');
 
-        }, 5000)
+        }, 60000)
+    },
+    isDrawingPlayerOnline: function() {
+        if(this.isPlayerDrawing){
+            const isOnline = users.findOnlineUser(this.drawingPlayer.id);
+
+            if(_.isEmpty(isOnline)){
+                console.log('Drawing player quitted, rolling again!');
+
+                chat.onSend({
+                    username: 'GAME',
+                    message: `Sadly, drawing player quitted, rolling another player! `,
+                    type: 'system__message'
+                })
+    
+                this.isPlayerDrawing = false;
+                io.emit('NEXT_ROUND');
+            }
+
+        }
     }
 }
 

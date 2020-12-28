@@ -1,5 +1,4 @@
 const io = require('../socket');
-
 class User{
     constructor(id, username, points){
         this.id = id;
@@ -12,6 +11,13 @@ let onlineList = [];
 const userIO = {
     User: (id, username, points) => new User(id, username, points),
     getPlayerList: () => onlineList,
+    findOnlineUser: (id) => { 
+        const lol = onlineList.filter(function(player) { 
+            return player.id === id
+        })
+
+        return lol;
+    },
     onConnect: (id, username) => {
         console.log(`User ${id} connected`)
 
@@ -31,10 +37,10 @@ const userIO = {
         onlineList = onlineList.filter(function(player) {
             return player.id !== id;
         })
-
+        
         io.emit("PLAYER_LIST_UPDATE");
     },
-    getRandomPlayer: () => {
+    getRandomPlayer: function() {
         let keys = Object.keys( onlineList );
         return onlineList[keys[ keys.length * Math.random() << 0]];
     }

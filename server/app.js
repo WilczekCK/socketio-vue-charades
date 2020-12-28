@@ -12,15 +12,17 @@ io.on('connection', function(socket){
         users.onConnect(socket.id, username);
         if(!game.isPlayerDrawing && users.getPlayerList().length > 1){
             game.rollPlayer();
-            game.startRound();
         }
     })
 
     socket.on('NEXT_ROUND', () => {
         if(!game.isPlayerDrawing && users.getPlayerList().length > 1){
             game.rollPlayer();
-            game.startRound();
         }
+    })
+
+    socket.on('WORD_SELECTED', (word) => {
+        game.startRound(word);
     })
 
     socket.on("SEND_MESSAGE", function(data){
@@ -41,5 +43,6 @@ io.on('connection', function(socket){
 
     socket.on('disconnect', () => {
         users.onDisconnect(socket.id);
+        game.isDrawingPlayerOnline();
     })
 })
