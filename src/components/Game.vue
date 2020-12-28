@@ -1,7 +1,7 @@
 <template>
 <div style="height:100%;">
     <h2><b-badge variant="primary">Vue + SocketIO Charades</b-badge></h2>
-    
+    <h5 v-if="wordSelected">The word you have to draw is: <b>{{ wordSelected }}</b></h5>
     <b-modal ref="word-selector"
       no-close-on-esc
       no-close-on-backdrop 
@@ -27,6 +27,7 @@ export default {
   data(){
     return {
       isDrawing: false,
+      wordSelected: undefined,
       drawingPlayer: {
         username: undefined,
         id: null,
@@ -47,7 +48,11 @@ export default {
       })
     },
     selectWord(){
-      this.$refs['word-selector'].show()
+      this.$refs['word-selector'].show();
+    },
+    hideModal(e){
+      this.wordSelected = e.originalTarget.innerText;
+      this.$refs['word-selector'].hide();
     }
   },
   mounted: function(){
