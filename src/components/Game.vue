@@ -35,7 +35,10 @@ export default {
     this.getDrawingPlayer();
     
     //if connected, and new player is drawing recog
-    this.socket.on('IS_PLAYER_SELECTED', () => this.getDrawingPlayer()); 
+    this.socket.on('IS_PLAYER_SELECTED', () => this.getDrawingPlayer());
+    
+    //hearable, watcher-like
+    this.socket.on('NEXT_ROUND', () => this.socket.emit('NEXT_ROUND'));
   },
   watch:{
   }

@@ -12,6 +12,14 @@ io.on('connection', function(socket){
         users.onConnect(socket.id, username);
         if(!game.isPlayerDrawing && users.getPlayerList().length > 1){
             game.rollPlayer();
+            game.startRound();
+        }
+    })
+
+    socket.on('NEXT_ROUND', () => {
+        if(!game.isPlayerDrawing && users.getPlayerList().length > 1){
+            game.rollPlayer();
+            game.startRound();
         }
     })
 
