@@ -44,7 +44,7 @@ const gameIO = {
         }
     },
     checkIfWordIsProper: function({username, message, type}, userId){
-        if(userId !== this.drawingPlayer.id){
+        if(userId !== this.drawingPlayer.id && this.wordToAnswer){
 
             if(message.toLowerCase() === this.wordToAnswer.toLowerCase() ){
                 chat.onSend({
@@ -56,8 +56,26 @@ const gameIO = {
                 this.isPlayerDrawing = false;
                 io.emit('NEXT_ROUND');
             }else{
-                //game.ifWordSimilarGiveTip()
+                this.ifWordSimilarGiveTip(message)
             }
+
+
+        }else{
+            return 0;
+        }
+    },
+    ifWordSimilarGiveTip: function(word){
+        const playerAnswerLetterArray = _.toArray(word);
+        const answerLetterArray = _.toArray(this.wordToAnswer);
+
+        const lettersSimilar = _.intersection(playerAnswerLetterArray, answerLetterArray);
+
+        if(lettersSimilar.length >= 2){
+            chat.onSend({
+                username: 'GAME',
+                message: `CLOSE! The letters the same letters are ${lettersSimilar}`,
+                type: 'system__message'
+            })
         }
     }
 }
