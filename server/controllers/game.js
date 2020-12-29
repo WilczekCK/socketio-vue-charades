@@ -30,22 +30,15 @@ const gameIO = {
         }, 60000)
     },
     isDrawingPlayerOnline: function() {
-        if(this.isPlayerDrawing){
-            const isOnline = users.findOnlineUser(this.drawingPlayer.id);
-
-            if(_.isEmpty(isOnline)){
-                console.log('Drawing player quitted, rolling again!');
-
-                chat.onSend({
-                    username: 'GAME',
-                    message: `Sadly, drawing player quitted, rolling another player! `,
-                    type: 'system__message'
-                })
+        if(this.isPlayerDrawing && _.isEmpty(users.findOnlineUser(this.drawingPlayer.id))){
+            chat.onSend({
+                username: 'GAME',
+                message: `Sadly, drawing player quitted, rolling another player! (If 2 >= players are online) `,
+                type: 'system__message'
+            })
     
-                this.isPlayerDrawing = false;
-                io.emit('NEXT_ROUND');
-            }
-
+            this.isPlayerDrawing = false;
+            io.emit('NEXT_ROUND');
         }
     }
 }
