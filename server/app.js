@@ -27,6 +27,7 @@ io.on('connection', function(socket){
 
     socket.on("SEND_MESSAGE", function(data){
         chat.onSend(data);
+        game.checkIfWordIsProper(data, socket.id);
     })
 
     socket.on("OS_MESSAGE", function (data){

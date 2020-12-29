@@ -8,6 +8,7 @@ const gameIO = {
         id: null,
         points: null
     },
+    wordToAnswer: undefined,
     isPlayerDrawing: false,
     rollPlayer: function() {
         this.drawingPlayer = users.getRandomPlayer();
@@ -23,6 +24,7 @@ const gameIO = {
     startRound: function (word) {
         var that = this;
 
+        this.wordToAnswer = word;
         setTimeout(function(){
             that.isPlayerDrawing = false;
             io.emit('NEXT_ROUND');
@@ -39,6 +41,23 @@ const gameIO = {
     
             this.isPlayerDrawing = false;
             io.emit('NEXT_ROUND');
+        }
+    },
+    checkIfWordIsProper: function({username, message, type}, userId){
+        if(userId !== this.drawingPlayer.id){
+
+            if(message.toLowerCase() === this.wordToAnswer.toLowerCase() ){
+                chat.onSend({
+                    username: 'GAME',
+                    message: `Congratulations! ${username} guessed the word and gain 1 point!`,
+                    type: 'system__message'
+                })
+        
+                this.isPlayerDrawing = false;
+                io.emit('NEXT_ROUND');
+            }else{
+                //game.ifWordSimilarGiveTip()
+            }
         }
     }
 }
