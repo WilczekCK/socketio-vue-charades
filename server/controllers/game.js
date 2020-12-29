@@ -49,7 +49,7 @@ const gameIO = {
             if(message.toLowerCase() === this.wordToAnswer.toLowerCase() ){
                 chat.onSend({
                     username: 'GAME',
-                    message: `Congratulations! ${username} guessed the word and gain 1 point!`,
+                    message: `Congratulations! ${username} guessed the word "{${message}}" and gain 1 point!`,
                     type: 'system__message'
                 })
         
@@ -73,7 +73,7 @@ const gameIO = {
         if(lettersSimilar.length >= 2){
             chat.onSend({
                 username: 'GAME',
-                message: `CLOSE! The letters the same letters are ${lettersSimilar}`,
+                message: `CLOSE!! - The same letters are: ${lettersSimilar}`,
                 type: 'system__message'
             })
         }
