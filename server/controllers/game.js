@@ -10,7 +10,7 @@ const gameIO = {
     },
     wordToAnswer: undefined,
     isPlayerDrawing: false,
-    timeoutInstance: null,
+    getAnswerTimeoutInstance: null,
     rollPlayer: function() {
         this.drawingPlayer = users.getRandomPlayer();
         this.isPlayerDrawing = true;
@@ -26,7 +26,7 @@ const gameIO = {
         this.wordToAnswer = word;
         const that = this;
 
-        this.timeoutInstance = setTimeout(function(){
+        this.getAnswerTimeoutInstance = setTimeout(function(){
             that.isPlayerDrawing = false;
             
             chat.onSend({
@@ -55,7 +55,7 @@ const gameIO = {
             switch (message.toLowerCase() === this.wordToAnswer.toLowerCase() ){
                 case true:
                     this.playerWon(userId, username, message);
-                    clearTimeout(this.timeoutInstance);
+                    clearTimeout(this.getAnswerTimeoutInstance);
                     break;
                 case false:
                     this.ifWordSimilarGiveTip(message)
