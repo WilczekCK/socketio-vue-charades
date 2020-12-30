@@ -27,8 +27,15 @@ const gameIO = {
         this.wordToAnswer = word;
         setTimeout(function(){
             that.isPlayerDrawing = false;
+            
+            chat.onSend({
+                username: 'GAME',
+                message: `Sadly, drawing player did not help you, the round ended `,
+                type: 'system__message'
+            })
+    
+            
             io.emit('NEXT_ROUND');
-
         }, 60000)
     },
     isDrawingPlayerOnline: function() {
@@ -63,8 +70,10 @@ const gameIO = {
             message: `Congratulations! ${username} guessed the word "${message}" and gain 1 point!`,
             type: 'system__message'
         })
-        users.givePointToUser(id);
         
+        users.givePointToUser(id);
+        users.givePointToUser(this.isPlayerDrawing.id);
+
         this.isPlayerDrawing = false;
         io.emit('NEXT_ROUND');
     },
