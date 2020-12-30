@@ -16,6 +16,7 @@ io.on('connection', function(socket){
     })
 
     socket.on('NEXT_ROUND', () => {
+        console.log(game.isPlayerDrawing, users.getPlayerList().length)
         if(!game.isPlayerDrawing && users.getPlayerList().length > 1){
             game.rollPlayer();
         }

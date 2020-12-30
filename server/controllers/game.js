@@ -10,6 +10,7 @@ const gameIO = {
     },
     wordToAnswer: undefined,
     isPlayerDrawing: false,
+    timeoutInstance: null,
     rollPlayer: function() {
         this.drawingPlayer = users.getRandomPlayer();
         this.isPlayerDrawing = true;
@@ -22,10 +23,10 @@ const gameIO = {
         })
     },
     startRound: function (word) {
-        var that = this;
-       
         this.wordToAnswer = word;
-        setTimeout(function(){
+        const that = this;
+
+        this.timeoutInstance = setTimeout(function(){
             that.isPlayerDrawing = false;
             
             chat.onSend({
@@ -33,10 +34,9 @@ const gameIO = {
                 message: `Sadly, drawing player did not help you, the round ended `,
                 type: 'system__message'
             })
-    
             
             io.emit('NEXT_ROUND');
-        }, 60000)
+        }, 10000)
     },
     isDrawingPlayerOnline: function() {
         if(this.isPlayerDrawing && _.isEmpty(users.findOnlineUser(this.drawingPlayer.id))){
@@ -55,6 +55,7 @@ const gameIO = {
             switch (message.toLowerCase() === this.wordToAnswer.toLowerCase() ){
                 case true:
                     this.playerWon(userId, username, message);
+                    clearTimeout(this.timeoutInstance);
                     break;
                 case false:
                     this.ifWordSimilarGiveTip(message)
