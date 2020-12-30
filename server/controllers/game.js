@@ -45,24 +45,27 @@ const gameIO = {
     },
     checkIfWordIsProper: function({username, message, type}, userId){
         if(userId !== this.drawingPlayer.id && this.wordToAnswer){
-
-            if(message.toLowerCase() === this.wordToAnswer.toLowerCase() ){
-                chat.onSend({
-                    username: 'GAME',
-                    message: `Congratulations! ${username} guessed the word "{${message}}" and gain 1 point!`,
-                    type: 'system__message'
-                })
-        
-                this.isPlayerDrawing = false;
-                io.emit('NEXT_ROUND');
-            }else{
-                this.ifWordSimilarGiveTip(message)
+            switch (message.toLowerCase() === this.wordToAnswer.toLowerCase() ){
+                case true:
+                    this.playerWon(userId, username, message);
+                    break;
+                case false:
+                    this.ifWordSimilarGiveTip(message)
+                    break;
             }
-
-
         }else{
             return 0;
         }
+    },
+    playerWon(id, username, message){
+        chat.onSend({
+            username: 'GAME',
+            message: `Congratulations! ${username} guessed the word "${message}" and gain 1 point!`,
+            type: 'system__message'
+        })
+
+        this.isPlayerDrawing = false;
+        io.emit('NEXT_ROUND');
     },
     ifWordSimilarGiveTip: function(word){
         const playerAnswerLetterArray = _.toArray(word);
