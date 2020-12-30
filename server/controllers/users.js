@@ -12,11 +12,11 @@ const userIO = {
     User: (id, username, points) => new User(id, username, points),
     getPlayerList: () => onlineList,
     findOnlineUser: (id) => { 
-        const lol = onlineList.filter(function(player) { 
+        const result = onlineList.filter(function(player) { 
             return player.id === id
         })
-
-        return lol;
+        
+        return result;
     },
     onConnect: (id, username) => {
         console.log(`User ${id} connected`)
@@ -39,6 +39,10 @@ const userIO = {
         })
         
         io.emit("PLAYER_LIST_UPDATE");
+    },
+    givePointToUser: function (id) {
+        let player = this.findOnlineUser(id);
+        player[0].points += 1;
     },
     getRandomPlayer: function() {
         let keys = Object.keys( onlineList );

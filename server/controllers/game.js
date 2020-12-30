@@ -23,7 +23,7 @@ const gameIO = {
     },
     startRound: function (word) {
         var that = this;
-
+       
         this.wordToAnswer = word;
         setTimeout(function(){
             that.isPlayerDrawing = false;
@@ -63,7 +63,8 @@ const gameIO = {
             message: `Congratulations! ${username} guessed the word "${message}" and gain 1 point!`,
             type: 'system__message'
         })
-
+        users.givePointToUser(id);
+        
         this.isPlayerDrawing = false;
         io.emit('NEXT_ROUND');
     },
