@@ -15,7 +15,7 @@ const userIO = {
         const result = onlineList.filter(function(player) { 
             return player.id === id
         })
-        
+
         return result;
     },
     onConnect: (id, username) => {
@@ -43,6 +43,8 @@ const userIO = {
     givePointToUser: function (id) {
         let player = this.findOnlineUser(id);
         player[0].points += 1;
+
+        io.emit("PLAYER_LIST_UPDATE");
     },
     getRandomPlayer: function() {
         let keys = Object.keys( onlineList );

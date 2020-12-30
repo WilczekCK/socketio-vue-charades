@@ -70,9 +70,9 @@ const gameIO = {
             message: `Congratulations! ${username} guessed the word "${message}" and gain 1 point!`,
             type: 'system__message'
         })
-        
+
         users.givePointToUser(id);
-        users.givePointToUser(this.isPlayerDrawing.id);
+        users.givePointToUser(this.drawingPlayer.id);
 
         this.isPlayerDrawing = false;
         io.emit('NEXT_ROUND');

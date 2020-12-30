@@ -12,7 +12,8 @@
                             <b-spinner variant="primary" label="Spinning"></b-spinner>
                         </div>
                         <ul class="chat__menu__playerList" v-else>
-                            <li v-for="player in playerList" :key='player.id'>{{player.username}}</li>                        </ul>
+                            <li v-for="player in playerList" :key='player.id'>{{player.username}}, points: {{player.points}}</li>
+                        </ul>
                     </b-popover>
                 </b-col>
                 <b-col>
