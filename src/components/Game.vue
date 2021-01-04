@@ -1,11 +1,14 @@
 <template>
 <div style="height:100%;">
-    <h2><b-badge variant="primary">Vue + SocketIO Charades</b-badge></h2>
-    <h5 v-if="wordSelected">The word you have to draw is: <b>{{ wordSelected }}</b></h5>
 
     <v-stage :config="conva.config">
       <v-layer>
-        <v-circle :config="conva.circle"></v-circle>
+        <v-rect :config="conva.rect"></v-rect>>
+          <v-label :config="conva.label">
+            <v-tag :config="conva.label.tag" />
+            <v-text :config="conva.label.text" />
+          </v-label>
+          <v-text :config="{text: `The word you have to draw is: ${ wordSelected }`, y: 50, x:6, fontSize: 12}"  v-if="wordSelected"/>
       </v-layer>
     </v-stage>
 
@@ -41,18 +44,31 @@ export default {
       },
       conva: {
         config: {
-          width: 200,
-          height: 200
+          width: 1200,
+          height: 535
         },
-        circle: {
-          x: 100,
-          y: 100,
-          radius: 70,
-          fill: "red",
-          stroke: "black",
-          strokeWidth: 4
-        }
-      }
+        rect: {
+          x: 0,
+          y: 0,
+          width: 1140,
+          height: 535,
+          fill: "white",
+        },
+        label: {
+          x: 5,
+          y: 5,
+          tag: {
+            fill: '#007bff',
+            lineJoin: 'round',
+          },
+          text: {
+            text: 'VueJS + SocketIO Charades',
+            fontSize: 16,
+            padding: 10,
+            fill: 'white'
+          }
+        },
+      },
     }
   },
   methods: {

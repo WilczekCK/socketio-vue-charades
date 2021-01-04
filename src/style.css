@@ -2,6 +2,10 @@
     height:100vh;
     width:100%;
     background:rgba(0,0,0,.2);
+    margin:0 auto;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .chat__container{
@@ -73,6 +77,8 @@ ul.chat__menu__playerList{
 
 .game__container{
     background:white;
-    min-height:69%;
+    padding-left:0px;
+    padding-right:0px;
+    height:535px;
 }
 
