@@ -1,23 +1,34 @@
 <template>
 <div style="height:100%;">
-    <v-stage ref="blackboard" :config="conva.config">
+    <v-stage ref="blackboard" :config="conva.config" @mousemove="changeActualPos">
       <v-layer>
-        <v-rect :config="conva.rect" @mousedown="draw"></v-rect>>
+        <v-rect :config="conva.rect" @onmousedown="isMouseButtonHold = true" @onmouseup="isMouseButtonHold = false"></v-rect>>
         <headerLabel />
   
         <v-text v-if="wordSelected" :config="{text: `The word you have to draw is: ${ wordSelected }`, y: 50, x:6, fontSize: 12}"  />
 
-        <v-circle 
+        <v-shape 
           v-for="paint in paintings"
           :key="paint.id"
           :config="{
-            x: paint.x,
-            y: paint.y,
+            sceneFunc: function(context, shape){
+              context.lineTo(paint.x, paint.y);
+              context.stroke();
+
+              context.beginPath();
+              context.moveTo(paint.x, paint.y);
+              
+
+              
+
+              // special Konva.js method
+              //context.fillStrokeShape(shape); 
+            },
             width: 5,
             height: 5,
             fill: 'red'
           }">
-        </v-circle>
+        </v-shape>
       </v-layer>
     </v-stage>
 
@@ -47,6 +58,9 @@ export default {
   props: ['socket', 'playerList'],
   data(){
     return {
+      isMouseButtonHold: false,
+      actualPosX: 0,
+      actualPosY: 0,
       paintings: [
         {x: 125, y: 325},
         {x: 125, y: 253},
@@ -76,11 +90,14 @@ export default {
   },
   methods: {
     draw(){
-      const mousePos = this.$refs.blackboard.getNode().getPointerPosition();
-      const x = mousePos.x;
-      const y = mousePos.y;
-      
-      this.paintings.push({x, y});
+      this.paintings.push({x:this.actualPosX, y:this.actualPosY});
+    },
+    changeActualPos(){
+        const mousePos = this.$refs.blackboard.getNode().getPointerPosition();
+        this.actualPosX = mousePos.x;
+        this.actualPosY = mousePos.y;
+
+        console.log(mousePos)
     },
     selectDrawingPlayer(){
       this.getDrawingPlayer();
@@ -116,6 +133,12 @@ export default {
     });
   },
   watch:{
+    actualPosX: function(){
+      this.draw();
+    },
+    actualPosY: function(){
+      this.draw();
+    }
   }
 }
 </script>
