@@ -1,12 +1,23 @@
 <template>
 <div style="height:100%;">
-
-    <v-stage :config="conva.config">
+    <v-stage ref="blackboard" :config="conva.config">
       <v-layer>
-        <v-rect :config="conva.rect"></v-rect>>
+        <v-rect :config="conva.rect" @mousedown="draw"></v-rect>>
         <headerLabel />
   
         <v-text v-if="wordSelected" :config="{text: `The word you have to draw is: ${ wordSelected }`, y: 50, x:6, fontSize: 12}"  />
+
+        <v-circle 
+          v-for="paint in paintings"
+          :key="paint.id"
+          :config="{
+            x: paint.x,
+            y: paint.y,
+            width: 5,
+            height: 5,
+            fill: 'red'
+          }">
+        </v-circle>
       </v-layer>
     </v-stage>
 
@@ -36,6 +47,12 @@ export default {
   props: ['socket', 'playerList'],
   data(){
     return {
+      paintings: [
+        {x: 125, y: 325},
+        {x: 125, y: 253},
+        {x: 200, y: 325},
+        {x: 300, y: 325},
+        ],
       wordSelected: undefined,
       drawingPlayer: {
         username: undefined,
@@ -58,6 +75,13 @@ export default {
     }
   },
   methods: {
+    draw(){
+      const mousePos = this.$refs.blackboard.getNode().getPointerPosition();
+      const x = mousePos.x;
+      const y = mousePos.y;
+      
+      this.paintings.push({x, y});
+    },
     selectDrawingPlayer(){
       this.getDrawingPlayer();
     },
