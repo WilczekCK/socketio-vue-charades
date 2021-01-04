@@ -4,11 +4,9 @@
     <v-stage :config="conva.config">
       <v-layer>
         <v-rect :config="conva.rect"></v-rect>>
-          <v-label :config="conva.label">
-            <v-tag :config="conva.label.tag" />
-            <v-text :config="conva.label.text" />
-          </v-label>
-          <v-text :config="{text: `The word you have to draw is: ${ wordSelected }`, y: 50, x:6, fontSize: 12}"  v-if="wordSelected"/>
+        <headerLabel />
+  
+        <v-text v-if="wordSelected" :config="{text: `The word you have to draw is: ${ wordSelected }`, y: 50, x:6, fontSize: 12}"  />
       </v-layer>
     </v-stage>
 
@@ -31,8 +29,10 @@
 
 <script>
 //import _ from 'underscore';
+import headerLabel from './canvas/headerLabel';
 export default {
   name: 'Game',
+  components: {headerLabel},
   props: ['socket', 'playerList'],
   data(){
     return {
@@ -53,20 +53,6 @@ export default {
           width: 1140,
           height: 535,
           fill: "white",
-        },
-        label: {
-          x: 5,
-          y: 5,
-          tag: {
-            fill: '#007bff',
-            lineJoin: 'round',
-          },
-          text: {
-            text: 'VueJS + SocketIO Charades',
-            fontSize: 16,
-            padding: 10,
-            fill: 'white'
-          }
         },
       },
     }
