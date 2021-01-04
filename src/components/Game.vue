@@ -3,6 +3,12 @@
     <h2><b-badge variant="primary">Vue + SocketIO Charades</b-badge></h2>
     <h5 v-if="wordSelected">The word you have to draw is: <b>{{ wordSelected }}</b></h5>
 
+    <v-stage :config="conva.config">
+      <v-layer>
+        <v-circle :config="conva.circle"></v-circle>
+      </v-layer>
+    </v-stage>
+
     <b-modal ref="word-selector"
       no-close-on-esc
       no-close-on-backdrop 
@@ -32,6 +38,20 @@ export default {
         username: undefined,
         id: null,
         points: null
+      },
+      conva: {
+        config: {
+          width: 200,
+          height: 200
+        },
+        circle: {
+          x: 100,
+          y: 100,
+          radius: 70,
+          fill: "red",
+          stroke: "black",
+          strokeWidth: 4
+        }
       }
     }
   },
