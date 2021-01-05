@@ -3,20 +3,25 @@
     <v-stage ref="blackboard" :config="conva.config" @mousemove="draw" @mousedown="startDraw"  @mouseup="stopDraw">
       <v-layer>
         <v-rect :config="conva.rect"></v-rect>>
-        <headerLabel />
+        
   
         <v-text v-if="wordSelected" :config="{text: `The word you have to draw is: ${ wordSelected }`, y: 50, x:6, fontSize: 12}"  />
+       
 
-        <v-circle 
-          v-for="paint in paintings"
-          :key="paint.id"
-          :config="{
+        <v-circle
+        v-for="paint in paintings"
+        :key="paint.id"
+        :config="{
             fill: 'black',
             x: paint.x,
             y: paint.y,
-            radius: 70,
-          }">
-        </v-circle >
+            radius: 70
+        }">
+        </v-circle>
+
+
+        <headerLabel />
+        <toolbox />
       </v-layer>
     </v-stage>
 
@@ -40,9 +45,10 @@
 <script>
 //import _ from 'underscore';
 import headerLabel from './canvas/headerLabel';
+import toolbox from './canvas/toolbox';
 export default {
   name: 'Game',
-  components: {headerLabel},
+  components: {headerLabel, toolbox},
   props: ['socket', 'playerList'],
   data(){
     return {
