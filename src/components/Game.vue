@@ -1,34 +1,22 @@
 <template>
 <div style="height:100%;">
-    <v-stage ref="blackboard" :config="conva.config" @mousemove="changeActualPos">
+    <v-stage ref="blackboard" :config="conva.config" @mousemove="draw" @mousedown="startDraw"  @mouseup="stopDraw">
       <v-layer>
-        <v-rect :config="conva.rect" @onmousedown="isMouseButtonHold = true" @onmouseup="isMouseButtonHold = false"></v-rect>>
+        <v-rect :config="conva.rect"></v-rect>>
         <headerLabel />
   
         <v-text v-if="wordSelected" :config="{text: `The word you have to draw is: ${ wordSelected }`, y: 50, x:6, fontSize: 12}"  />
 
-        <v-shape 
+        <v-circle 
           v-for="paint in paintings"
           :key="paint.id"
           :config="{
-            sceneFunc: function(context, shape){
-              context.lineTo(paint.x, paint.y);
-              context.stroke();
-
-              context.beginPath();
-              context.moveTo(paint.x, paint.y);
-              
-
-              
-
-              // special Konva.js method
-              //context.fillStrokeShape(shape); 
-            },
-            width: 5,
-            height: 5,
-            fill: 'red'
+            fill: 'black',
+            x: paint.x,
+            y: paint.y,
+            radius: 70,
           }">
-        </v-shape>
+        </v-circle >
       </v-layer>
     </v-stage>
 
@@ -59,14 +47,15 @@ export default {
   data(){
     return {
       isMouseButtonHold: false,
-      actualPosX: 0,
-      actualPosY: 0,
+      lastCoords: {x: 0, y: 0},
+      ctxCanvas: undefined,
       paintings: [
-        {x: 125, y: 325},
-        {x: 125, y: 253},
-        {x: 200, y: 325},
-        {x: 300, y: 325},
-        ],
+        {x: 100, y: 100},
+        {x: 101, y: 101},
+        {x: 102, y: 102},
+        {x: 103, y: 103},
+        {x: 104, y: 104},
+      ],
       wordSelected: undefined,
       drawingPlayer: {
         username: undefined,
@@ -90,14 +79,17 @@ export default {
   },
   methods: {
     draw(){
-      this.paintings.push({x:this.actualPosX, y:this.actualPosY});
-    },
-    changeActualPos(){
-        const mousePos = this.$refs.blackboard.getNode().getPointerPosition();
-        this.actualPosX = mousePos.x;
-        this.actualPosY = mousePos.y;
+      if(!this.isMouseButtonHold) return;
+      const mousePos = this.$refs.blackboard.getNode().getPointerPosition();
 
-        console.log(mousePos)
+      this.paintings.push({x:mousePos.x, y:mousePos.y});
+      this.lastCoords = {x:mousePos.x, y:mousePos.y};
+    },
+    startDraw(){
+      this.isMouseButtonHold = true;
+    },
+    stopDraw(){
+      this.isMouseButtonHold = false;
     },
     selectDrawingPlayer(){
       this.getDrawingPlayer();
@@ -131,14 +123,6 @@ export default {
       this.wordSelected = undefined;
       this.socket.emit('NEXT_ROUND');
     });
-  },
-  watch:{
-    actualPosX: function(){
-      this.draw();
-    },
-    actualPosY: function(){
-      this.draw();
-    }
   }
 }
 </script>
