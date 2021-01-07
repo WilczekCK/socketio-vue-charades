@@ -1,10 +1,10 @@
 <template>
     <v-group>
-        <v-rect @mousemove="highlight" @mouseout="unhighlight" :config="conva.background"></v-rect>
-        <v-circle @mousemove="highlight" @mouseout="unhighlight" :config="conva.circle" dataTool="circle"></v-circle>
-        <v-rect @mousemove="highlight" @mouseout="unhighlight" :config="conva.rect" dataTool="rect"></v-rect>
-        <v-star @mousemove="highlight" @mouseout="unhighlight" :config="conva.star" dataTool="star"></v-star>
-        <v-ring @mousemove="highlight" @mouseout="unhighlight" :config="conva.ring" dataTool="ring"></v-ring>
+        <v-rect @click="changeBrush" @mousemove="highlight" @mouseout="unhighlight" :config="conva.background"></v-rect>
+        <v-circle @click="changeBrush" @mousemove="highlight" @mouseout="unhighlight" :config="conva.circle" dataTool="circle"></v-circle>
+        <v-rect @click="changeBrush" @mousemove="highlight" @mouseout="unhighlight" :config="conva.rect" dataTool="rect"></v-rect>
+        <v-star @click="changeBrush" @mousemove="highlight" @mouseout="unhighlight" :config="conva.star" dataTool="star"></v-star>
+        <v-ring @click="changeBrush" @mousemove="highlight" @mouseout="unhighlight" :config="conva.ring" dataTool="ring"></v-ring>
         <v-group>
             <v-circle @mousemove="highlight" :config="conva.colorbox.r" dataTool="colorbox"></v-circle>
             <v-circle @mousemove="highlight" :config="conva.colorbox.g" dataTool="colorbox"></v-circle>
@@ -22,6 +22,7 @@ export default {
     const opacity = 0.8;
     return {
         highlightedItem: undefined,
+        actualBrush: 'circle',
         conva: {
             background:{
                 x: defaultX,
@@ -90,6 +91,12 @@ export default {
     };
   },
   methods: {
+      changeBrush: function(){
+        if(this.highlightedItem){
+            this.actualBrush = this.highlightedItem;
+            this.$emit('brushChanged', this.actualBrush);
+        }
+      },
       unhighlight: function(){
         if(this.highlightedItem){
             this.conva.[this.highlightedItem].opacity = .8;
@@ -97,7 +104,6 @@ export default {
       },
       highlight: function(e){
         this.highlightedItem = e.target.attrs.dataTool;
-        console.log(this.highlightedItem)
         if(this.highlightedItem){
             this.conva.[this.highlightedItem].opacity = 1;
         }

@@ -21,7 +21,7 @@
 
 
         <headerLabel />
-        <toolbox />
+        <toolbox @brushChanged="setBrush"/>
       </v-layer>
     </v-stage>
 
@@ -53,8 +53,7 @@ export default {
   data(){
     return {
       isMouseButtonHold: false,
-      lastCoords: {x: 0, y: 0},
-      ctxCanvas: undefined,
+      actualBrush: 'circle',
       paintings: [
         {x: 100, y: 100},
         {x: 101, y: 101},
@@ -84,6 +83,9 @@ export default {
     }
   },
   methods: {
+    setBrush(brush){
+      this.actualBrush = brush;
+    },
     draw(){
       if(!this.isMouseButtonHold) return;
       const mousePos = this.$refs.blackboard.getNode().getPointerPosition();
