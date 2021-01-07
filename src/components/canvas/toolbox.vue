@@ -16,70 +16,74 @@
 <script>
 export default {
   data() {
-    const defaultX = 1065;
-    const defaultY = 60;
+    const defaultX = 1100;
+    const defaultY = 120;
+    const defaultIconColor = 'white';
+    const opacity = 0.8;
     return {
         highlightedItem: undefined,
         conva: {
             background:{
                 x: defaultX,
                 y: defaultY,
-                height: 400,
-                width: 75,
+                height: 270,
+                width: 40,
                 fill: '#007bff',
             },
             circle:{
-                x: defaultX + 39,
-                y: defaultY + 50,
-                radius: 25,
-                fill: 'black',
-                opacity: 0.8,
+                x: defaultX + 21,
+                y: defaultY + 30,
+                radius: 14,
+                fill: defaultIconColor,
+                opacity
             },
             rect:{
-                x: defaultX + 16,
-                y: defaultY + 100,
-                height:45,
-                width:45,
-                fill: 'black',
-                opacity: 0.8,
+                x: defaultX + 8,
+                y: defaultY + 70,
+                height:25,
+                width:25,
+                fill: defaultIconColor,
+                opacity
             },
             star: {
-                x: defaultX + 39,
-                y: defaultY + 200,
+                x: defaultX + 21,
+                y: defaultY + 135,
                 numPoints: 6,
-                fill: 'black',
-                innerRadius: 14,
-                outerRadius: 28,
-                opacity: 0.8,
+                fill: defaultIconColor,
+                innerRadius: 8,
+                outerRadius: 16,
+                opacity
             },
             ring: {
-                x: defaultX + 39,
-                y: defaultY + 275,
+                x: defaultX + 21,
+                y: defaultY + 190,
                 numPoints: 6,
-                fill: 'black',
-                innerRadius: 12,
-                outerRadius: 24,
-                opacity: 0.8,
+                fill: defaultIconColor,
+                innerRadius: 7,
+                outerRadius: 14,
+                opacity
             },
             colorbox: {
-                opacity: 0.8,
                 r:{
-                    x: defaultX + 39,
-                    y: defaultY + 340,
-                    radius: 15,
+                    x: defaultX + 21,
+                    y: defaultY + 235,
+                    radius: 7,
                     fill: 'red',
+                    opacity
                 },
                 g:{
-                    x: defaultX + 25,
-                    y: defaultY + 360,
-                    radius: 15,
+                    x: defaultX + 14,
+                    y: defaultY + 246,
+                    radius: 7,
                     fill: 'green',
+                    opacity
                 },
                 b:{
-                    x: defaultX + 52,
-                    y: defaultY + 360,
-                    radius: 15,
+                    x: defaultX + 27,
+                    y: defaultY + 246,
+                    radius: 7,
                     fill: 'blue',
+                    opacity
                 },
             }
       },
@@ -93,6 +97,7 @@ export default {
       },
       highlight: function(e){
         this.highlightedItem = e.target.attrs.dataTool;
+        console.log(this.highlightedItem)
         if(this.highlightedItem){
             this.conva.[this.highlightedItem].opacity = 1;
         }
