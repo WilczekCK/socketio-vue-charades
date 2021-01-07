@@ -21,7 +21,7 @@
 
 
         <headerLabel />
-        <toolbox @brushChanged="setBrush" @colorPicker="displayColorPicker = !displayColorPicker"/>
+        <toolbox @brushChanged="setBrush" @colorPicker="$refs['color-picker'].show()"/>
       </v-layer>
     </v-stage>
 
@@ -34,7 +34,8 @@
       hide-footer 
       hide-header
       >
-      <color-picker v-bind="color" @input="onInput"></color-picker>
+      <color-picker v-bind="color" @select="hideColorPicker"></color-picker>
+      <p style="text-align:center;">Click the circle inside to select color</p>
     </b-modal>
 
     <b-modal ref="word-selector"
@@ -138,8 +139,9 @@ export default {
 
       this.$refs['word-selector'].hide();
     },
-    onInput(hue) {
-      this.color.hue = hue;
+
+    hideColorPicker() {
+       this.$refs['color-picker'].hide();
     },
   },
   mounted: function(){
@@ -161,5 +163,5 @@ export default {
 
 <style scoped>
   @import '~@radial-color-picker/vue-color-picker/dist/vue-color-picker.min.css';
-
+  .rcp{margin:30px auto;}
 </style>
