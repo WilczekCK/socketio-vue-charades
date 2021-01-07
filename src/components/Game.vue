@@ -5,11 +5,11 @@
         <v-rect :config="conva.rect"></v-rect>>
         
   
-        <v-text v-if="wordSelected" :config="{text: `The word you have to draw is: ${ wordSelected }`, y: 50, x:6, fontSize: 12}"  />
+        <v-text v-if="gameData.wordSelected" :config="{text: `The word you have to draw is: ${ gameData.wordSelected }`, y: 50, x:6, fontSize: 12}"  />
        
 
         <v-circle
-        v-for="paint in paintings"
+        v-for="paint in gameData.paintings"
         :key="paint.id"
         :config="{
             fill: 'black',
@@ -21,9 +21,21 @@
 
 
         <headerLabel />
-        <toolbox @brushChanged="setBrush"/>
+        <toolbox @brushChanged="setBrush" @colorPicker="displayColorPicker = !displayColorPicker"/>
       </v-layer>
     </v-stage>
+
+
+
+    <b-modal ref="color-picker"
+      no-close-on-esc
+      no-close-on-backdrop 
+      hide-header-close 
+      hide-footer 
+      hide-header
+      >
+      <color-picker v-bind="color" @input="onInput"></color-picker>
+    </b-modal>
 
     <b-modal ref="word-selector"
       no-close-on-esc
@@ -46,26 +58,35 @@
 //import _ from 'underscore';
 import headerLabel from './canvas/headerLabel';
 import toolbox from './canvas/toolbox';
+import ColorPicker from '@radial-color-picker/vue-color-picker';
 export default {
   name: 'Game',
-  components: {headerLabel, toolbox},
+  components: {headerLabel, toolbox, ColorPicker},
   props: ['socket', 'playerList'],
   data(){
     return {
-      isMouseButtonHold: false,
-      actualBrush: 'circle',
-      paintings: [
-        {x: 100, y: 100},
-        {x: 101, y: 101},
-        {x: 102, y: 102},
-        {x: 103, y: 103},
-        {x: 104, y: 104},
-      ],
-      wordSelected: undefined,
-      drawingPlayer: {
-        username: undefined,
-        id: null,
-        points: null
+      color: {
+        hue: 50,
+        saturation: 100,
+        luminosity: 50,
+        alpha: 1
+      },
+      gameData: {
+        isMouseButtonHold: false,
+        actualBrush: 'circle',
+        paintings: [
+          {x: 100, y: 100},
+          {x: 101, y: 101},
+          {x: 102, y: 102},
+          {x: 103, y: 103},
+          {x: 104, y: 104},
+        ],
+        wordSelected: undefined,
+        drawingPlayer: {
+          username: undefined,
+          id: null,
+          points: null
+        },
       },
       conva: {
         config: {
@@ -84,29 +105,28 @@ export default {
   },
   methods: {
     setBrush(brush){
-      this.actualBrush = brush;
+      this.gameData.actualBrush = brush;
     },
     draw(){
-      if(!this.isMouseButtonHold) return;
+      if(!this.gameData.isMouseButtonHold) return;
       const mousePos = this.$refs.blackboard.getNode().getPointerPosition();
 
-      this.paintings.push({x:mousePos.x, y:mousePos.y});
-      this.lastCoords = {x:mousePos.x, y:mousePos.y};
+      this.gameData.paintings.push({x:mousePos.x, y:mousePos.y});
     },
     startDraw(){
-      this.isMouseButtonHold = true;
+      this.gameData.isMouseButtonHold = true;
     },
     stopDraw(){
-      this.isMouseButtonHold = false;
+      this.gameData.isMouseButtonHold = false;
     },
     selectDrawingPlayer(){
-      this.getDrawingPlayer();
+      this.gameData.getDrawingPlayer();
     },
     getDrawingPlayer(){
       this.socket.emit('LOAD_DRAWING_PLAYER', (callback) => {
-        this.drawingPlayer = callback;
+        this.gameData.drawingPlayer = callback;
 
-        this.socket.id === this.drawingPlayer.id ? this.selectWord() : 0;
+        this.socket.id === this.gameData.drawingPlayer.id ? this.selectWord() : 0;
       })
     },
     selectWord(){
@@ -117,7 +137,10 @@ export default {
       this.socket.emit('WORD_SELECTED', this.wordSelected);
 
       this.$refs['word-selector'].hide();
-    }
+    },
+    onInput(hue) {
+      this.color.hue = hue;
+    },
   },
   mounted: function(){
     //check while connecting
@@ -128,7 +151,7 @@ export default {
     
     //hearable, watcher-like
     this.socket.on('NEXT_ROUND', () => {
-      this.wordSelected = undefined;
+      this.gameData.wordSelected = undefined;
       this.socket.emit('NEXT_ROUND');
     });
   }
@@ -137,5 +160,6 @@ export default {
 
 
 <style scoped>
+  @import '~@radial-color-picker/vue-color-picker/dist/vue-color-picker.min.css';
 
 </style>
