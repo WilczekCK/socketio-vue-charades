@@ -5,11 +5,20 @@
         <v-rect @click="changeBrush" @mousemove="highlight" @mouseout="unhighlight" :config="conva.rect" dataTool="rect"></v-rect>
         <v-star @click="changeBrush" @mousemove="highlight" @mouseout="unhighlight" :config="conva.star" dataTool="star"></v-star>
         <v-ring @click="changeBrush" @mousemove="highlight" @mouseout="unhighlight" :config="conva.ring" dataTool="ring"></v-ring>
-        <v-group>
+        
+        <v-group @click="colorPicker = !colorPicker">
             <v-circle @mousemove="highlight" :config="conva.colorbox.r" dataTool="colorbox"></v-circle>
             <v-circle @mousemove="highlight" :config="conva.colorbox.g" dataTool="colorbox"></v-circle>
             <v-circle @mousemove="highlight" :config="conva.colorbox.b" dataTool="colorbox"></v-circle>
         </v-group>
+
+        <v-group v-if="colorPicker">
+            <v-rect :config="conva.colorbox.gradient"></v-rect>
+            <v-rect :config="conva.colorbox.graR"></v-rect>
+            <v-rect :config="conva.colorbox.graG"></v-rect>
+            <v-rect :config="conva.colorbox.graB"></v-rect>
+        </v-group>
+
     </v-group>
 </template>
 
@@ -21,6 +30,7 @@ export default {
     const defaultIconColor = 'white';
     const opacity = 0.8;
     return {
+        colorPicker: false,
         highlightedItem: undefined,
         actualBrush: 'circle',
         conva: {
@@ -86,11 +96,43 @@ export default {
                     fill: 'blue',
                     opacity
                 },
+                gradient: {
+                    x: defaultX - 105,
+                    y: defaultY + 220,
+                    height:50,
+                    width:100,
+                    fillLinearGradientStartPoint: { x: -50, y: -50 },
+                    fillLinearGradientEndPoint: { x: 50, y: 50 },
+                    fillLinearGradientColorStops: [0, 'red', 1, 'yellow'],
+                },
+                graR: {
+                    fill: 'red',
+                    x: defaultX - 105,
+                    y: defaultY + 275,
+                    height:25,
+                    width:31,
+                },
+                graG: {
+                    fill: 'green',
+                    x: defaultX - 71,
+                    y: defaultY + 275,
+                    height:25,
+                    width:31,
+                },
+                graB: {
+                    fill: 'blue',
+                    x: defaultX - 36,
+                    y: defaultY + 275,
+                    height:25,
+                    width:31,
+                }
             }
       },
     };
   },
   methods: {
+      toggleColorPicker: function(){
+      },
       changeBrush: function(){
         if(this.highlightedItem){
             this.actualBrush = this.highlightedItem;
