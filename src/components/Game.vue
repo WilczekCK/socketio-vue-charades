@@ -12,7 +12,7 @@
         v-for="paint in gameData.paintings"
         :key="paint.id"
         :config="{
-            fill: `hsl(${color.hue}, ${color.saturation}%, ${color.luminosity}%)`,
+            fill: paint.color,
             x: paint.x,
             y: paint.y,
             radius: 70
@@ -79,11 +79,7 @@ export default {
         isMouseButtonHold: false,
         actualBrush: 'circle',
         paintings: [
-          {x: 100, y: 100},
-          {x: 101, y: 101},
-          {x: 102, y: 102},
-          {x: 103, y: 103},
-          {x: 104, y: 104},
+          //x, y, color
         ],
         wordSelected: undefined,
         drawingPlayer: {
@@ -115,7 +111,7 @@ export default {
       if(!this.gameData.isMouseButtonHold) return;
       const mousePos = this.$refs.blackboard.getNode().getPointerPosition();
 
-      this.gameData.paintings.push({x:mousePos.x, y:mousePos.y});
+      this.gameData.paintings.push({x:mousePos.x, y:mousePos.y, color: `hsl(${this.color.hue}, ${this.color.saturation}%, ${this.color.luminosity}%)`});
     },
     startDraw(){
       this.gameData.isMouseButtonHold = true;
