@@ -12,7 +12,7 @@
         v-for="paint in gameData.paintings"
         :key="paint.id"
         :config="{
-            fill: 'black',
+            fill: `hsl(${color.hue}, ${color.saturation}%, ${color.luminosity}%)`,
             x: paint.x,
             y: paint.y,
             radius: 70
@@ -21,7 +21,10 @@
 
 
         <headerLabel />
-        <toolbox @brushChanged="setBrush" @colorPicker="$refs['color-picker'].show()"/>
+        <toolbox 
+          @brushChanged="setBrush" 
+          @colorPicker="$refs['color-picker'].show()"
+          />
       </v-layer>
     </v-stage>
 
@@ -140,7 +143,8 @@ export default {
       this.$refs['word-selector'].hide();
     },
 
-    hideColorPicker() {
+    hideColorPicker(hue) {
+       this.color.hue = hue;
        this.$refs['color-picker'].hide();
     },
   },
