@@ -6,7 +6,8 @@
         
   
         <v-text v-if="gameData.wordSelected" :config="{text: `The word you have to draw is: ${ gameData.wordSelected }`, y: 50, x:6, fontSize: 12}"  />
-       
+
+        <v-container :config="{zIndex: 1}">
           <v-circle
           v-for="circle in gameData.paintings.circles"
           :key="circle.id"
@@ -54,7 +55,7 @@
               numPoints: 6
           }">
           </v-ring>
-
+        </v-container>
 
 
         <headerLabel />
