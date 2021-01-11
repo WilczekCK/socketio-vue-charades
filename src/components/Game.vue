@@ -1,68 +1,70 @@
 <template>
 <div style="height:100%;">
-    <v-stage ref="blackboard" :config="conva.config" @mousemove="draw(gameData.actualBrush)" @mousedown="startDraw"  @mouseup="stopDraw">
+    <v-stage ref="blackboard" :config="conva.config" @mousemove="draw(gameData.actualBrush)" @mousedown="startDraw"  @mouseup="stopDraw">  
+     
       <v-layer>
-        <v-rect :config="conva.rect"></v-rect>>
-        
-  
-        <v-text v-if="gameData.wordSelected" :config="{text: `The word you have to draw is: ${ gameData.wordSelected }`, y: 50, x:6, fontSize: 12}"  />
+        <v-group :config="{zIndex: -1}">
+            <v-container>
+            <v-circle
+            v-for="circle in gameData.paintings.circles"
+            :key="circle.id"
+            :config="{
+                fill: circle.color,
+                x: circle.x,
+                y: circle.y,
+                radius: 70
+            }">
+            </v-circle>
 
-        <v-container :config="{zIndex: 1}">
-          <v-circle
-          v-for="circle in gameData.paintings.circles"
-          :key="circle.id"
-          :config="{
-              fill: circle.color,
-              x: circle.x,
-              y: circle.y,
-              radius: 70
-          }">
-          </v-circle>
+            <v-rect
+            v-for="rect in gameData.paintings.rects"
+            :key="rect.id"
+            :config="{
+                fill: rect.color,
+                x: rect.x,
+                y: rect.y,
+                height:25,
+                width:25
+            }">
+            </v-rect>
+    
+            <v-star
+            v-for="star in gameData.paintings.stars"
+            :key="star.id"
+            :config="{
+                fill: star.color,
+                x: star.x,
+                y: star.y,
+                innerRadius: 8,
+                outerRadius: 16,
+            }">
+            </v-star>
 
-          <v-rect
-          v-for="rect in gameData.paintings.rects"
-          :key="rect.id"
-          :config="{
-              fill: rect.color,
-              x: rect.x,
-              y: rect.y,
-              height:25,
-              width:25
-          }">
-          </v-rect>
-  
-          <v-star
-          v-for="star in gameData.paintings.stars"
-          :key="star.id"
-          :config="{
-              fill: star.color,
-              x: star.x,
-              y: star.y,
-              innerRadius: 8,
-              outerRadius: 16,
-          }">
-          </v-star>
+            <v-ring
+            v-for="ring in gameData.paintings.rings"
+            :key="ring.id"
+            :config="{
+                fill: ring.color,
+                x: ring.x,
+                y: ring.y,
+                innerRadius: 8,
+                outerRadius: 16,
+                numPoints: 6
+            }">
+            </v-ring>
+            </v-container>
+        </v-group>
 
-          <v-ring
-          v-for="ring in gameData.paintings.rings"
-          :key="ring.id"
-          :config="{
-              fill: ring.color,
-              x: ring.x,
-              y: ring.y,
-              innerRadius: 8,
-              outerRadius: 16,
-              numPoints: 6
-          }">
-          </v-ring>
-        </v-container>
+          <v-group :config="{zIndex: 9999999}">
+            <v-rect :config="conva.rect"></v-rect>>
+            <v-text v-if="gameData.wordSelected" :config="{text: `The word you have to draw is: ${ gameData.wordSelected }`, y: 50, x:6, fontSize: 12}"  />
 
-
-        <headerLabel />
-        <toolbox 
-          @brushChanged="setBrush" 
-          @colorPicker="$refs['color-picker'].show()"
-          />
+            <headerLabel />
+            <toolbox
+              @brushChanged="setBrush" 
+              @colorPicker="$refs['color-picker'].show()"
+            />
+        </v-group>
       </v-layer>
     </v-stage>
 
@@ -146,7 +148,6 @@ export default {
           y: 0,
           width: 1140,
           height: 535,
-          fill: "white",
         },
       },
     }
