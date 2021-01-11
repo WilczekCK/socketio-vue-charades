@@ -1,9 +1,9 @@
 <template>
 <div style="height:100%;">
-    <v-stage ref="blackboard" :config="conva.config" @mousemove="draw(gameData.actualBrush)" @mousedown="startDraw"  @mouseup="stopDraw">  
+    <v-stage ref="blackboard" :config="conva.config" @mousemove="draw(gameData.actualBrush)" @mousedown="startDraw(gameData.actualBrush)"  @mouseup="stopDraw">  
      
       <v-layer>
-        <v-group :config="{zIndex: -1}">
+        <v-group>
             <v-container>
             <v-circle
             v-for="circle in gameData.paintings.circles"
@@ -55,7 +55,7 @@
             </v-container>
         </v-group>
 
-          <v-group :config="{zIndex: 9999999}">
+          <v-group>
             <v-rect :config="conva.rect"></v-rect>>
             <v-text v-if="gameData.wordSelected" :config="{text: `The word you have to draw is: ${ gameData.wordSelected }`, y: 50, x:6, fontSize: 12}"  />
 
@@ -162,8 +162,9 @@ export default {
       this.gameData.paintings[brush+'s'].push({x:mousePos.x, y:mousePos.y, color: `hsl(${this.color.hue}, ${this.color.saturation}%, ${this.color.luminosity}%)`});
     },
      
-    startDraw(){
+    startDraw(brush){
       this.gameData.isMouseButtonHold = true;
+      this.draw(brush);
     },
     stopDraw(){
       this.gameData.isMouseButtonHold = false;
