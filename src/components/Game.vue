@@ -140,7 +140,7 @@ export default {
       },
       conva: {
         config: {
-          width: 1200,
+          width: 1140,
           height: 535
         },
         rect: {
