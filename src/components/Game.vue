@@ -204,9 +204,6 @@ export default {
        this.color.hue = hue;
        this.$refs['color-picker'].hide();
     },
-    setOptimization(){
-      
-    }
   },
   mounted: function(){
     //check while connecting
