@@ -54,6 +54,7 @@ const gameIO = {
             })
             
             io.emit('NEXT_ROUND');
+            io.emit('CLEAR_BLACKBOARD');
         }, 10000)
     },
     isDrawingPlayerOnline: function() {

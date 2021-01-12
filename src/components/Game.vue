@@ -204,24 +204,24 @@ export default {
     },
   },
   mounted: function(){
-    //check while connecting
-    this.getDrawingPlayer();
+    //check while connecting, recog when start the game
+      this.getDrawingPlayer();
     
-    //if connected, and new player is drawing recog
-    this.socket.on('IS_PLAYER_SELECTED', () => this.getDrawingPlayer());
-    
-    //hearable, watcher-like
-    this.socket.on('NEXT_ROUND', () => {
-      this.gameData.wordSelected = undefined;
-      this.socket.emit('NEXT_ROUND');
-    });
+    //on connected, recog player and fill the blackboard
+      this.socket.on('IS_PLAYER_SELECTED', () => this.getDrawingPlayer());
+      this.socket.emit('GET_BLACKBOARD_DATA', (callback) => this.gameData.paintings = callback);
+      
+    //hearables, watcher-like
+      this.socket.on('NEXT_ROUND', () => {
+        this.gameData.wordSelected = undefined;
+        this.socket.emit('NEXT_ROUND');
+      });
 
-    this.socket.on('UPDATE_FE_BLACKBOARD', () => {
-      this.socket.emit('GET_BLACKBOARD_DATA', (callback) => {
-        this.gameData.paintings = callback;
+      this.socket.on('UPDATE_FE_BLACKBOARD', () => {
+        this.socket.emit('GET_BLACKBOARD_DATA', (callback) => {
+          this.gameData.paintings = callback;
+        })
       })
-    })
-
   }
 }
 </script>
