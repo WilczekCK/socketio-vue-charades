@@ -41,6 +41,7 @@ const gameIO = {
         })
     },
     startRound: function (word) {
+        
         this.wordToAnswer = word;
         const that = this;
 
@@ -53,8 +54,16 @@ const gameIO = {
                 type: 'system__message'
             })
             
+
+            that.blackboard = {
+                circles: [],
+                rects:  [],
+                stars: [],
+                rings: [],
+            }
+
             io.emit('NEXT_ROUND');
-            io.emit('CLEAR_BLACKBOARD');
+            io.emit('UPDATE_FE_BLACKBOARD');
         }, 10000)
     },
     isDrawingPlayerOnline: function() {

@@ -55,10 +55,6 @@ io.on('connection', function(socket){
         callback(game.blackboard)
     })
 
-    socket.on('CLEAR_BLACKBOARD', () => {
-        game.blackboard = [];
-    })
-
     socket.on('disconnect', () => {
         users.onDisconnect(socket.id);
         game.isDrawingPlayerOnline();
