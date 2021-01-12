@@ -8,6 +8,12 @@ const gameIO = {
         id: null,
         points: null
     },
+    drawingElements: {
+        circles: [],
+        rects:  [],
+        stars: [],
+        rings: [],
+    },
     wordToAnswer: undefined,
     isPlayerDrawing: false,
     getAnswerTimeoutInstance: null,

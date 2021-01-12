@@ -158,8 +158,8 @@ export default {
     setBrush(brush){
       this.gameData.actualBrush = brush;
     },
-    mouseHandler(brush){
-      const mousePos = this.$refs.blackboard.getNode().getPointerPosition();
+    mouseHandler(){
+     const mousePos = this.$refs.blackboard.getNode().getPointerPosition();
       const preparePaint = {
           x:mousePos.x,
           y:mousePos.y,
@@ -167,11 +167,11 @@ export default {
           color: `hsl(${this.color.hue}, ${this.color.saturation}%, ${this.color.luminosity}%)`,
       }
 
-      if(!this.gameData.isMouseButtonHold) {
+      /*if(!this.gameData.isMouseButtonHold) {
         this.gameData.paintings[brush+'s'].pop();
-      }
+      }*/
 
-      this.gameData.paintings[brush+'s'].push(preparePaint);
+      this.socket.emit('PLAYER_DRAW_ON_BLACKBOARD', preparePaint);
     },
      
     startDraw(brush){

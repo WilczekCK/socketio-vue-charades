@@ -43,6 +43,10 @@ io.on('connection', function(socket){
         callback(game.drawingPlayer);
     })
 
+    socket.on("PLAYER_DRAW_ON_BLACKBOARD", function(data) {
+        console.log(data)
+    })
+
     socket.on('disconnect', () => {
         users.onDisconnect(socket.id);
         game.isDrawingPlayerOnline();
