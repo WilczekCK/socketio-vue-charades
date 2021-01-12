@@ -109,6 +109,9 @@ export default {
             this.conva.[this.highlightedItem].opacity = 1;
         }
       },
+      handleScroll: function(){
+          console.log('mouse wheel scrolled')
+      }
   }
 };
 </script>

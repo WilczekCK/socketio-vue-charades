@@ -1,6 +1,6 @@
 <template>
 <div style="height:100%;">
-    <v-stage ref="blackboard" :config="conva.config" @mousemove="draw(gameData.actualBrush)" @mousedown="startDraw(gameData.actualBrush)"  @mouseup="stopDraw">  
+    <v-stage ref="blackboard" :config="conva.config" @mousemove="mouseHandler(gameData.actualBrush)" @mousedown="startDraw(gameData.actualBrush)"  @mouseup="stopDraw">  
      
       <v-layer>
         <v-group>
@@ -12,7 +12,7 @@
                 fill: circle.color,
                 x: circle.x,
                 y: circle.y,
-                radius: 70
+                radius: 70,
             }">
             </v-circle>
 
@@ -24,7 +24,7 @@
                 x: rect.x,
                 y: rect.y,
                 height:25,
-                width:25
+                width:25,
             }">
             </v-rect>
     
@@ -49,7 +49,7 @@
                 y: ring.y,
                 innerRadius: 8,
                 outerRadius: 16,
-                numPoints: 6
+                numPoints: 6,
             }">
             </v-ring>
             </v-container>
@@ -119,13 +119,10 @@ export default {
       },
       gameData: {
         isMouseButtonHold: false,
+        placeholderUnderCursor: true,
         actualBrush: 'circle',
         paintings: {
-          circles: [{
-            x: 103,
-            y: 200,
-            color: 'hsl(137.2025632945273, 100%, 50%)'
-          }],
+          circles: [],
           rects:  [],
           stars: [],
           rings: [],
@@ -156,18 +153,29 @@ export default {
     setBrush(brush){
       this.gameData.actualBrush = brush;
     },
-    draw(brush){
-      if(!this.gameData.isMouseButtonHold) return;
+    mouseHandler(brush){
       const mousePos = this.$refs.blackboard.getNode().getPointerPosition();
-      this.gameData.paintings[brush+'s'].push({x:mousePos.x, y:mousePos.y, color: `hsl(${this.color.hue}, ${this.color.saturation}%, ${this.color.luminosity}%)`});
+      const preparePaint = {
+          x:mousePos.x,
+          y:mousePos.y,
+          color: `hsl(${this.color.hue}, ${this.color.saturation}%, ${this.color.luminosity}%)`,
+      }
+
+      if(!this.gameData.isMouseButtonHold) {
+        this.gameData.paintings[brush+'s'].pop();
+      }
+
+      this.gameData.paintings[brush+'s'].push(preparePaint);
     },
      
     startDraw(brush){
+      this.gameData.placeholderUnderCursor = false;
       this.gameData.isMouseButtonHold = true;
-      this.draw(brush);
+      this.mouseHandler(brush);
     },
     stopDraw(){
       this.gameData.isMouseButtonHold = false;
+      this.gameData.placeholderUnderCursor = true;
     },
     selectDrawingPlayer(){
       this.gameData.getDrawingPlayer();
@@ -188,11 +196,13 @@ export default {
 
       this.$refs['word-selector'].hide();
     },
-
     hideColorPicker(hue) {
        this.color.hue = hue;
        this.$refs['color-picker'].hide();
     },
+    setOptimization(){
+      
+    }
   },
   mounted: function(){
     //check while connecting
