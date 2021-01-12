@@ -215,6 +215,13 @@ export default {
       this.gameData.wordSelected = undefined;
       this.socket.emit('NEXT_ROUND');
     });
+
+    this.socket.on('UPDATE_FE_BLACKBOARD', () => {
+      this.socket.emit('GET_BLACKBOARD_DATA', (callback) => {
+        this.gameData.paintings = callback;
+      })
+    })
+
   }
 }
 </script>

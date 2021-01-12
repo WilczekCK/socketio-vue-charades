@@ -47,6 +47,14 @@ io.on('connection', function(socket){
         game.pushShapeToBlackboard(data);
     })
 
+    socket.on("UPDATE_FE_BLACKBOARD", (callback) => {
+        return;
+    })
+
+    socket.on('GET_BLACKBOARD_DATA', (callback) => {
+        callback(game.blackboard)
+    })
+
     socket.on('disconnect', () => {
         users.onDisconnect(socket.id);
         game.isDrawingPlayerOnline();

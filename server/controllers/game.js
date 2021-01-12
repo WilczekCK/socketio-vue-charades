@@ -25,9 +25,9 @@ const gameIO = {
                 size: size,
                 color: color
             });
-        }
 
-        console.log(this.blackboard.circles)
+            io.emit('UPDATE_FE_BLACKBOARD');
+        }
     },
     rollPlayer: function() {
         this.drawingPlayer = users.getRandomPlayer();
