@@ -41,7 +41,14 @@ const gameIO = {
         })
     },
     startRound: function (word) {
-        
+        io.emit('UPDATE_FE_BLACKBOARD');
+        this.blackboard = {
+            circles: [],
+            rects:  [],
+            stars: [],
+            rings: [],
+        }
+
         this.wordToAnswer = word;
         const that = this;
 
@@ -55,15 +62,8 @@ const gameIO = {
             })
             
 
-            that.blackboard = {
-                circles: [],
-                rects:  [],
-                stars: [],
-                rings: [],
-            }
 
             io.emit('NEXT_ROUND');
-            io.emit('UPDATE_FE_BLACKBOARD');
         }, 10000)
     },
     isDrawingPlayerOnline: function() {
