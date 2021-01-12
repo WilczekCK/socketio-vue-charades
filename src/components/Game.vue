@@ -12,7 +12,7 @@
                 fill: circle.color,
                 x: circle.x,
                 y: circle.y,
-                radius: 70,
+                radius: circle.size,
             }">
             </v-circle>
 
@@ -23,8 +23,8 @@
                 fill: rect.color,
                 x: rect.x,
                 y: rect.y,
-                height:25,
-                width:25,
+                height: rect.size,
+                width: rect.size,
             }">
             </v-rect>
     
@@ -35,8 +35,8 @@
                 fill: star.color,
                 x: star.x,
                 y: star.y,
-                innerRadius: 8,
-                outerRadius: 16,
+                innerRadius: star.size / 2,
+                outerRadius: star.size,
             }">
             </v-star>
 
@@ -47,8 +47,8 @@
                 fill: ring.color,
                 x: ring.x,
                 y: ring.y,
-                innerRadius: 8,
-                outerRadius: 16,
+                innerRadius: ring.size / 2,
+                outerRadius: ring.size,
                 numPoints: 6,
             }">
             </v-ring>
@@ -78,7 +78,12 @@
       hide-header
       >
       <color-picker v-bind="color" @select="hideColorPicker"></color-picker>
-      <p style="text-align:center;">Click the circle inside to select color</p>
+      
+      <div class="p-4"></div>
+      <b-form-input id="range-1" class="" v-model="gameData.brushSize" type="range" min="5" max="50"></b-form-input>
+      <b-badge variant="primary" class="text-center p-2"> Brush size: {{ gameData.brushSize }}</b-badge>
+
+      <div class="text-center mt-4"> Click the circle inside to select size and color</div>
     </b-modal>
 
     <b-modal ref="word-selector"
@@ -120,6 +125,7 @@ export default {
       gameData: {
         isMouseButtonHold: false,
         actualBrush: 'circle',
+        brushSize: 24,
         paintings: {
           circles: [],
           rects:  [],
@@ -157,6 +163,7 @@ export default {
       const preparePaint = {
           x:mousePos.x,
           y:mousePos.y,
+          size: this.gameData.brushSize,
           color: `hsl(${this.color.hue}, ${this.color.saturation}%, ${this.color.luminosity}%)`,
       }
 
@@ -220,5 +227,5 @@ export default {
 
 <style scoped>
   @import '~@radial-color-picker/vue-color-picker/dist/vue-color-picker.min.css';
-  .rcp{margin:30px auto;}
+  .rcp{margin: 0 auto;}
 </style>
