@@ -44,7 +44,7 @@ io.on('connection', function(socket){
     })
 
     socket.on("PLAYER_DRAW_ON_BLACKBOARD", function(data) {
-        console.log(data)
+        game.pushShapeToBlackboard(data);
     })
 
     socket.on('disconnect', () => {

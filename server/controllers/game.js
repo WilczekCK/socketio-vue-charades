@@ -8,7 +8,7 @@ const gameIO = {
         id: null,
         points: null
     },
-    drawingElements: {
+    blackboard: {
         circles: [],
         rects:  [],
         stars: [],
@@ -17,6 +17,18 @@ const gameIO = {
     wordToAnswer: undefined,
     isPlayerDrawing: false,
     getAnswerTimeoutInstance: null,
+    pushShapeToBlackboard: function({x, y, z, size, color, isPlaceholder, brush}) {
+        if(!isPlaceholder){
+           this.blackboard[brush+'s'].push({
+                x: x,
+                y: y,
+                size: size,
+                color: color
+            });
+        }
+
+        console.log(this.blackboard.circles)
+    },
     rollPlayer: function() {
         this.drawingPlayer = users.getRandomPlayer();
         this.isPlayerDrawing = true;
