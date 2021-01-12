@@ -119,7 +119,6 @@ export default {
       },
       gameData: {
         isMouseButtonHold: false,
-        placeholderUnderCursor: true,
         actualBrush: 'circle',
         paintings: {
           circles: [],
@@ -169,13 +168,11 @@ export default {
     },
      
     startDraw(brush){
-      this.gameData.placeholderUnderCursor = false;
       this.gameData.isMouseButtonHold = true;
       this.mouseHandler(brush);
     },
     stopDraw(){
       this.gameData.isMouseButtonHold = false;
-      this.gameData.placeholderUnderCursor = true;
     },
     selectDrawingPlayer(){
       this.gameData.getDrawingPlayer();
