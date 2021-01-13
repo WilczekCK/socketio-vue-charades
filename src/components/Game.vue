@@ -6,7 +6,7 @@
         <v-group>
             <v-container>
             <v-circle
-            v-for="circle in gameData.paintings.circles"
+            v-for="circle in gameData.blackboard.circles"
             :key="circle.id"
             :config="{
                 fill: circle.color,
@@ -17,7 +17,7 @@
             </v-circle>
 
             <v-rect
-            v-for="rect in gameData.paintings.rects"
+            v-for="rect in gameData.blackboard.rects"
             :key="rect.id"
             :config="{
                 fill: rect.color,
@@ -29,7 +29,7 @@
             </v-rect>
     
             <v-star
-            v-for="star in gameData.paintings.stars"
+            v-for="star in gameData.blackboard.stars"
             :key="star.id"
             :config="{
                 fill: star.color,
@@ -41,7 +41,7 @@
             </v-star>
 
             <v-ring
-            v-for="ring in gameData.paintings.rings"
+            v-for="ring in gameData.blackboard.rings"
             :key="ring.id"
             :config="{
                 fill: ring.color,
@@ -126,7 +126,7 @@ export default {
         isMouseButtonHold: false,
         actualBrush: 'circle',
         brushSize: 24,
-        paintings: {
+        blackboard: {
           circles: [],
           rects:  [],
           stars: [],
@@ -189,7 +189,6 @@ export default {
     getDrawingPlayer(){
       this.socket.emit('LOAD_DRAWING_PLAYER', (callback) => {
         this.gameData.drawingPlayer = callback;
-
         this.socket.id === this.gameData.drawingPlayer.id ? this.selectWord() : 0;
       })
     },
@@ -213,7 +212,7 @@ export default {
     
     //on connected, recog player and fill the blackboard
       this.socket.on('IS_PLAYER_SELECTED', () => this.getDrawingPlayer());
-      this.socket.emit('GET_BLACKBOARD_DATA', (callback) => this.gameData.paintings = callback);
+      this.socket.emit('GET_BLACKBOARD_DATA', (callback) => this.gameData.blackboard = callback);
       
     //hearables, watcher-like
       this.socket.on('NEXT_ROUND', () => {
@@ -223,7 +222,7 @@ export default {
 
       this.socket.on('UPDATE_FE_BLACKBOARD', () => {
         this.socket.emit('GET_BLACKBOARD_DATA', (callback) => {
-          this.gameData.paintings = callback;
+          this.gameData.blackboard = callback;
         })
       })
   }

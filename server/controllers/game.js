@@ -17,7 +17,7 @@ const gameIO = {
     wordToAnswer: undefined,
     isPlayerDrawing: false,
     getAnswerTimeoutInstance: null,
-    pushShapeToBlackboard: function({x, y, z, size, color, isPlaceholder, brush}) {
+    pushShapeToBlackboard: function({x, y, size, color, isPlaceholder, brush}) {
         if(!isPlaceholder){
            this.blackboard[brush+'s'].push({
                 x: x,
