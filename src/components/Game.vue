@@ -4,7 +4,10 @@
      
       <v-layer>
         <v-group>
-            <v-container>
+            <v-container
+            :config="{
+              name: 'blackboard-canvas'
+            }">
             <v-circle
             v-for="circle in gameData.blackboard.circles"
             :key="circle.id"
@@ -55,16 +58,16 @@
             </v-container>
         </v-group>
 
-          <v-group>
-            <v-rect :config="conva.rect"></v-rect>>
-            <v-text v-if="gameData.wordSelected" :config="{text: `The word you have to draw is: ${ gameData.wordSelected }`, y: 50, x:6, fontSize: 12}"  />
+        <v-group>
+          <v-rect :config="conva.rect"></v-rect>>
+          <v-text v-if="gameData.wordSelected" :config="{text: `The word you have to draw is: ${ gameData.wordSelected }`, y: 50, x:6, fontSize: 12}"  />
 
-            <headerLabel />
-            <toolbox
-              @brushChanged="setBrush" 
-              @colorPicker="$refs['color-picker'].show()"
-            />
-        </v-group>
+          <headerLabel />
+          <toolbox
+            @brushChanged="setBrush" 
+            @colorPicker="$refs['color-picker'].show()"
+          />
+      </v-group>
       </v-layer>
     </v-stage>
 

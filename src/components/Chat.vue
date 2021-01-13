@@ -4,7 +4,7 @@
 
         <b-container fluid class="chat__system">
             <ul>
-                <li class="chat__system__message" :class="{[message.type]: message.type}" v-for="message in messages" :key="message">
+                <li class="chat__system__message" :class="{[message.type]: message.type}" v-for="message in messages" :key="message.length">
                    <span class="chat__system__message__user">{{message.username}}</span> : {{message.message}}
                 </li> 
             </ul>
