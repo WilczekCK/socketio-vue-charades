@@ -17,11 +17,9 @@ const gameIO = {
     wordToAnswer: undefined,
     isPlayerDrawing: false,
     getAnswerTimeoutInstance: null,
-    pushShapeToBlackboard: function({x, y, size, color, isPlaceholder, brush, userId}) {
+    pushShapeToBlackboard: function({x, y, size, color, isPlaceholder, brush}) {
         isPlaceholder ? this.blackboard[brush+'s'].pop() : 0;
         
-
-
         this.blackboard[brush+'s'].push({
             x: x,
             y: y,
@@ -56,7 +54,7 @@ const gameIO = {
 
         this.getAnswerTimeoutInstance = setTimeout(function(){
             that.isPlayerDrawing = false;
-            
+
             chat.onSend({
                 username: 'GAME',
                 message: `Sadly, drawing player did not help you, the round ended `,
@@ -73,7 +71,8 @@ const gameIO = {
                 message: `Sadly, drawing player quitted, rolling another player! (If 2 >= players are online) `,
                 type: 'system__message'
             })
-    
+            
+            clearTimeout(this.getAnswerTimeoutInstance);
             this.isPlayerDrawing = false;
             io.emit('NEXT_ROUND');
         }
