@@ -9,7 +9,10 @@ import './style.css'
 
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
+
 Vue.use(VueKonva);
+VueKonva.pixelRatio = 0.5;
+
 Vue.config.productionTip = false
 
 new Vue({

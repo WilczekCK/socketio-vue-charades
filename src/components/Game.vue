@@ -4,57 +4,59 @@
      
       <v-layer>
         <v-group>
-            <v-container
-            :config="{
-              name: 'blackboard-canvas'
-            }">
-            <v-circle
-            v-for="circle in gameData.blackboard.circles"
-            :key="circle.id"
-            :config="{
-                fill: circle.color,
-                x: circle.x,
-                y: circle.y,
-                radius: circle.size,
-            }">
-            </v-circle>
+            <v-container>
+              <v-circle
+              v-for="circle in gameData.blackboard.circles"
+              :key="circle.id"
+              :config="{
+                  fill: circle.color,
+                  x: circle.x,
+                  y: circle.y,
+                  radius: circle.size,
+                  perfectDrawEnabled: false,
+                  listening:false,
+                  transformsEnabled: 'position',
+                  shadowForStrokeEnabled: false,
+                  hitStrokeWidth: 0,
+              }">
+              </v-circle>
 
-            <v-rect
-            v-for="rect in gameData.blackboard.rects"
-            :key="rect.id"
-            :config="{
-                fill: rect.color,
-                x: rect.x,
-                y: rect.y,
-                height: rect.size,
-                width: rect.size,
-            }">
-            </v-rect>
-    
-            <v-star
-            v-for="star in gameData.blackboard.stars"
-            :key="star.id"
-            :config="{
-                fill: star.color,
-                x: star.x,
-                y: star.y,
-                innerRadius: star.size / 2,
-                outerRadius: star.size,
-            }">
-            </v-star>
+              <v-rect
+              v-for="rect in gameData.blackboard.rects"
+              :key="rect.id"
+              :config="{
+                  fill: rect.color,
+                  x: rect.x,
+                  y: rect.y,
+                  height: rect.size,
+                  width: rect.size,
+              }">
+              </v-rect>
+      
+              <v-star
+              v-for="star in gameData.blackboard.stars"
+              :key="star.id"
+              :config="{
+                  fill: star.color,
+                  x: star.x,
+                  y: star.y,
+                  innerRadius: star.size / 2,
+                  outerRadius: star.size,
+              }">
+              </v-star>
 
-            <v-ring
-            v-for="ring in gameData.blackboard.rings"
-            :key="ring.id"
-            :config="{
-                fill: ring.color,
-                x: ring.x,
-                y: ring.y,
-                innerRadius: ring.size / 2,
-                outerRadius: ring.size,
-                numPoints: 6,
-            }">
-            </v-ring>
+              <v-ring
+              v-for="ring in gameData.blackboard.rings"
+              :key="ring.id"
+              :config="{
+                  fill: ring.color,
+                  x: ring.x,
+                  y: ring.y,
+                  innerRadius: ring.size / 2,
+                  outerRadius: ring.size,
+                  numPoints: 6,
+              }">
+              </v-ring>
             </v-container>
         </v-group>
 
