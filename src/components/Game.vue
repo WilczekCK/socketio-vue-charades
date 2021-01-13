@@ -159,26 +159,28 @@ export default {
       this.gameData.actualBrush = brush;
     },
     mouseHandler(brush){
-     const mousePos = this.$refs.blackboard.getNode().getPointerPosition();
+      if( !this.isActualPlayerTryingToDraw() ) return;
+      const mousePos = this.$refs.blackboard.getNode().getPointerPosition();
       const preparePaint = {
           x:mousePos.x,
           y:mousePos.y,
           brush : brush,
           size: this.gameData.brushSize,
           color: `hsl(${this.color.hue}, ${this.color.saturation}%, ${this.color.luminosity}%)`,
-          isPlaceholder: !this.gameData.isMouseButtonHold ? true : false
+          isPlaceholder: !this.gameData.isMouseButtonHold ? true : false,
+          userId: this.socket.id,
       }
 
       this.socket.emit('PLAYER_DRAW_ON_BLACKBOARD', preparePaint);
     },
      
     startDraw(brush){
-      //if player is guessing, do not allow him to draw!
-      const that = this;
-      this.socket.id !== this.gameData.drawingPlayer.id ? 0 : (function() {
-        that.gameData.isMouseButtonHold = true;
-        that.mouseHandler(brush);
-      })()
+      if( !this.isActualPlayerTryingToDraw() ) return;
+      this.gameData.isMouseButtonHold = true;
+      this.mouseHandler(brush);
+    },
+    isActualPlayerTryingToDraw(){
+      return this.socket.id !== this.gameData.drawingPlayer.id ? false : true;
     },
     stopDraw(){
       this.gameData.isMouseButtonHold = false;

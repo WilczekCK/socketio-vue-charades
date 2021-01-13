@@ -17,17 +17,19 @@ const gameIO = {
     wordToAnswer: undefined,
     isPlayerDrawing: false,
     getAnswerTimeoutInstance: null,
-    pushShapeToBlackboard: function({x, y, size, color, isPlaceholder, brush}) {
-        if(!isPlaceholder){
-           this.blackboard[brush+'s'].push({
-                x: x,
-                y: y,
-                size: size,
-                color: color
-            });
+    pushShapeToBlackboard: function({x, y, size, color, isPlaceholder, brush, userId}) {
+        isPlaceholder ? this.blackboard[brush+'s'].pop() : 0;
+        
 
-            io.emit('UPDATE_FE_BLACKBOARD');
-        }
+
+        this.blackboard[brush+'s'].push({
+            x: x,
+            y: y,
+            size: size,
+            color: color
+        });
+
+        io.emit('UPDATE_FE_BLACKBOARD');
     },
     rollPlayer: function() {
         this.drawingPlayer = users.getRandomPlayer();
@@ -61,8 +63,6 @@ const gameIO = {
                 type: 'system__message'
             })
             
-
-
             io.emit('NEXT_ROUND');
         }, 60000)
     },
