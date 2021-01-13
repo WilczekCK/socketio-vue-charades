@@ -173,8 +173,12 @@ export default {
     },
      
     startDraw(brush){
-      this.gameData.isMouseButtonHold = true;
-      this.mouseHandler(brush);
+      //if player is guessing, do not allow him to draw!
+      const that = this;
+      this.socket.id !== this.gameData.drawingPlayer.id ? 0 : (function() {
+        that.gameData.isMouseButtonHold = true;
+        that.mouseHandler(brush);
+      })()
     },
     stopDraw(){
       this.gameData.isMouseButtonHold = false;

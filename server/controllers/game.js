@@ -64,7 +64,7 @@ const gameIO = {
 
 
             io.emit('NEXT_ROUND');
-        }, 10000)
+        }, 60000)
     },
     isDrawingPlayerOnline: function() {
         if(this.isPlayerDrawing && _.isEmpty(users.findOnlineUser(this.drawingPlayer.id))){
