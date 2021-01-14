@@ -25,6 +25,25 @@ const gameIO = {
             function(paint){
                 return (
                     newShape.x === paint.x && newShape.y === paint.y && newShape.size >= paint.size && paint != blackboardUsedShapeArray[blackboardUsedShapeArray.length-1]
+                    ||
+                        ( (newShape.x - (newShape.size/2)) <= (paint.x - paint.size/2) && (paint.x + paint.size/2) <= (newShape.x + (newShape.size/2))                     
+                        &&  newShape.size >= paint.size && paint != blackboardUsedShapeArray[blackboardUsedShapeArray.length-1] )
+                    &&
+                        ( (newShape.y - (newShape.size/2)) <= (paint.y - paint.size/2) && (paint.y + paint.size/2) <= (newShape.y + (newShape.size/2))
+                        &&  newShape.size >= paint.size && paint != blackboardUsedShapeArray[blackboardUsedShapeArray.length-1] )
+                    /*
+                        ((newShape.x - (newShape.size/2)) < paint.x) 
+                    &&
+                        ((newShape.x + (newShape.size/2)) > paint.x) 
+                    &&  
+                        ((newShape.y - (newShape.size/2)) < paint.y) 
+                    &&  
+                        ((newShape.y + (newShape.size/2)) > paint.y) 
+                    && 
+                        newShape.size > paint.size 
+                    && 
+                        paint != blackboardUsedShapeArray[blackboardUsedShapeArray.length-1]
+                    */
                     );
             }
         )
