@@ -17,13 +17,29 @@ const gameIO = {
     wordToAnswer: undefined,
     isPlayerDrawing: false,
     getAnswerTimeoutInstance: null,
+    checkShapesForOptimization: function(newShape, blackboardArrayName){
+        const blackboardUsedShapeArray = this.blackboard[blackboardArrayName+'s'];
+
+        this.blackboard[blackboardArrayName+'s'] = _.reject(
+            blackboardUsedShapeArray,
+            function(paint){
+                return (
+                    newShape.x === paint.x && newShape.y === paint.y && newShape.size >= paint.size && paint != blackboardUsedShapeArray[blackboardUsedShapeArray.length-1]
+                    );
+            }
+        )
+
+
+        //nearly
+        //(newShape.x - newShape.size/2) <= (paint.x - paint.size/2) && (newShape.y + newShape.size/2) <= (paint.y + paint.size/2) && paint != blackboardUsedShapeArray[blackboardUsedShapeArray.length-1]
+        console.log(this.blackboard[blackboardArrayName+'s'].length)
+    },
     pushShapeToBlackboard: function({x, y, size, color, isPlaceholder, brush}) {
-        isPlaceholder ? this.blackboard[brush+'s'].pop() : 0;
-        
+        isPlaceholder ? this.blackboard[brush+'s'].pop() : this.checkShapesForOptimization({x, y, size, color, isPlaceholder, brush}, brush);
         this.blackboard[brush+'s'].push({
-            x: x,
-            y: y,
-            size: size,
+            x: parseInt(x),
+            y: parseInt(y),
+            size: parseInt(size),
             color: color
         });
 
