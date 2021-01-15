@@ -1,6 +1,6 @@
 <template>
 <div style="height:100%;">
-    <v-stage ref="blackboard" :config="conva.config" @mousemove="mouseHandler(gameData.actualBrush)" @mousedown="startDraw(gameData.actualBrush)"  @mouseup="stopDraw">  
+    <v-stage ref="blackboard" :config="conva.config" @mousemove="debounce(mouseHandler(gameData.actualBrush), 100)" @mousedown="startDraw(gameData.actualBrush)"  @mouseup="stopDraw">  
      
       <v-layer>
         <v-group>
@@ -132,7 +132,7 @@
 import headerLabel from './canvas/headerLabel';
 import toolbox from './canvas/toolbox';
 import ColorPicker from '@radial-color-picker/vue-color-picker';
-//import _ from 'underscore';
+import _ from 'underscore';
 
 export default {
   name: 'Game',
@@ -140,6 +140,7 @@ export default {
   props: ['socket', 'playerList'],
   data(){
     return {
+      debounce: function(funcToDebounce){return _.debounce(funcToDebounce, 300)},
       color: {
         hue: 50,
         saturation: 100,
