@@ -9,16 +9,11 @@
               v-for="circle in gameData.blackboard.circles"
               :key="circle.id"
               :config="{
+                  ...optimize,
                   fill: circle.color,
                   x: circle.x,
                   y: circle.y,
-                  radius: circle.size,
-                  
-                  perfectDrawEnabled: false,
-                  listening:false,
-                  transformsEnabled: 'position',
-                  shadowForStrokeEnabled: false,
-                  hitStrokeWidth: 0
+                  radius: circle.size
               }">
               </v-circle>
 
@@ -26,17 +21,12 @@
               v-for="rect in gameData.blackboard.rects"
               :key="rect.id"
               :config="{
+                  ...optimize,
                   fill: rect.color,
                   x: rect.x,
                   y: rect.y,
                   height: rect.size,
-                  width: rect.size,
-
-                  perfectDrawEnabled: false,
-                  listening:false,
-                  transformsEnabled: 'position',
-                  shadowForStrokeEnabled: false,
-                  hitStrokeWidth: 0
+                  width: rect.size
               }">
               </v-rect>
       
@@ -44,17 +34,12 @@
               v-for="star in gameData.blackboard.stars"
               :key="star.id"
               :config="{
+                  ...optimize,
                   fill: star.color,
                   x: star.x,
                   y: star.y,
                   innerRadius: star.size / 2,
-                  outerRadius: star.size,
-
-                  perfectDrawEnabled: false,
-                  listening:false,
-                  transformsEnabled: 'position',
-                  shadowForStrokeEnabled: false,
-                  hitStrokeWidth: 0
+                  outerRadius: star.size
               }">
               </v-star>
 
@@ -62,18 +47,13 @@
               v-for="ring in gameData.blackboard.rings"
               :key="ring.id"
               :config="{
+                  ...optimize,
                   fill: ring.color,
                   x: ring.x,
                   y: ring.y,
                   innerRadius: ring.size / 2,
                   outerRadius: ring.size,
-                  numPoints: 6,
-                  
-                  perfectDrawEnabled: false,
-                  listening:false,
-                  transformsEnabled: 'position',
-                  shadowForStrokeEnabled: false,
-                  hitStrokeWidth: 0
+                  numPoints: 6
               }">
               </v-ring>
             </v-container>
@@ -128,7 +108,6 @@
 </template>
 
 <script>
-//import _ from 'underscore';
 import headerLabel from './canvas/headerLabel';
 import toolbox from './canvas/toolbox';
 import ColorPicker from '@radial-color-picker/vue-color-picker';
@@ -140,6 +119,13 @@ export default {
   props: ['socket', 'playerList'],
   data(){
     return {
+      optimize: {            
+        perfectDrawEnabled: false,
+        listening:false,
+        transformsEnabled: 'position',
+        shadowForStrokeEnabled: false,
+        hitStrokeWidth: 0
+      },
       debounce: function(funcToDebounce){return _.debounce(funcToDebounce, 300)},
       color: {
         hue: 50,
