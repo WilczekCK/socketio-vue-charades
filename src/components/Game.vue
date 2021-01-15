@@ -9,7 +9,7 @@
               v-for="circle in gameData.blackboard.circles"
               :key="circle.id"
               :config="{
-                  ...optimize,
+                  ...gameData.optimize,
                   fill: circle.color,
                   x: circle.x,
                   y: circle.y,
@@ -21,7 +21,7 @@
               v-for="rect in gameData.blackboard.rects"
               :key="rect.id"
               :config="{
-                  ...optimize,
+                  ...gameData.optimize,
                   fill: rect.color,
                   x: rect.x,
                   y: rect.y,
@@ -34,7 +34,7 @@
               v-for="star in gameData.blackboard.stars"
               :key="star.id"
               :config="{
-                  ...optimize,
+                  ...gameData.optimize,
                   fill: star.color,
                   x: star.x,
                   y: star.y,
@@ -47,7 +47,7 @@
               v-for="ring in gameData.blackboard.rings"
               :key="ring.id"
               :config="{
-                  ...optimize,
+                  ...gameData.optimize,
                   fill: ring.color,
                   x: ring.x,
                   y: ring.y,
@@ -119,14 +119,6 @@ export default {
   props: ['socket', 'playerList'],
   data(){
     return {
-      optimize: {            
-        perfectDrawEnabled: false,
-        listening:false,
-        transformsEnabled: 'position',
-        shadowForStrokeEnabled: false,
-        hitStrokeWidth: 0
-      },
-      debounce: function(funcToDebounce){return _.debounce(funcToDebounce, 300)},
       color: {
         hue: 50,
         saturation: 100,
@@ -150,6 +142,13 @@ export default {
           id: null,
           points: null
         },
+        optimize: {            
+          perfectDrawEnabled: false,
+          listening:false,
+          transformsEnabled: 'position',
+          shadowForStrokeEnabled: false,
+          hitStrokeWidth: 0
+        },
       },
       conva: {
         config: {
@@ -166,6 +165,7 @@ export default {
     }
   },
   methods: {
+    debounce: (funcToDebounce) =>  _.debounce(funcToDebounce, 300),
     setBrush(brush){
       this.gameData.actualBrush = brush;
     },
