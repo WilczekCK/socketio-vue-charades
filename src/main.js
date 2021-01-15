@@ -11,7 +11,7 @@ Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
 
 Vue.use(VueKonva);
-VueKonva.pixelRatio = 0.5;
+VueKonva.pixelRatio = 0.01;
 
 Vue.config.productionTip = false
 

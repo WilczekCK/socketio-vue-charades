@@ -13,11 +13,12 @@
                   x: circle.x,
                   y: circle.y,
                   radius: circle.size,
+                  
                   perfectDrawEnabled: false,
                   listening:false,
                   transformsEnabled: 'position',
                   shadowForStrokeEnabled: false,
-                  hitStrokeWidth: 0,
+                  hitStrokeWidth: 0
               }">
               </v-circle>
 
@@ -30,6 +31,12 @@
                   y: rect.y,
                   height: rect.size,
                   width: rect.size,
+
+                  perfectDrawEnabled: false,
+                  listening:false,
+                  transformsEnabled: 'position',
+                  shadowForStrokeEnabled: false,
+                  hitStrokeWidth: 0
               }">
               </v-rect>
       
@@ -42,6 +49,12 @@
                   y: star.y,
                   innerRadius: star.size / 2,
                   outerRadius: star.size,
+
+                  perfectDrawEnabled: false,
+                  listening:false,
+                  transformsEnabled: 'position',
+                  shadowForStrokeEnabled: false,
+                  hitStrokeWidth: 0
               }">
               </v-star>
 
@@ -55,6 +68,12 @@
                   innerRadius: ring.size / 2,
                   outerRadius: ring.size,
                   numPoints: 6,
+                  
+                  perfectDrawEnabled: false,
+                  listening:false,
+                  transformsEnabled: 'position',
+                  shadowForStrokeEnabled: false,
+                  hitStrokeWidth: 0
               }">
               </v-ring>
             </v-container>

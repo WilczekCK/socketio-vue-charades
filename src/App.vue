@@ -39,6 +39,11 @@ import io from  'socket.io-client';
 
 export default {
   name: 'app',
+  head:{
+    meta: [
+      {name:"viewport", content:"width=device-width, initial-scale=1.0, user-scalable=no"}
+    ]
+  },
   data () {
     return {
       socket: io('http://localhost:3001'),
