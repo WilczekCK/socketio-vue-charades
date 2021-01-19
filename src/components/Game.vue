@@ -90,32 +90,20 @@
       <div class="text-center mt-4"> Click the circle inside to select size and color</div>
     </b-modal>
 
-    <b-modal ref="word-selector"
-      no-close-on-esc
-      no-close-on-backdrop 
-      hide-header-close 
-      hide-footer 
-      hide-header
-      >
-      <h4>You are selected by system!</h4>
-      <h6>Select what you want to draw:</h6>
-
-      <b-button class="mt-3" variant="success" block @click="selectedWord">Cat</b-button>
-      <b-button class="mt-3" variant="warning" block @click="selectedWord">Home</b-button>
-      <b-button class="mt-3" variant="danger" block @click="selectedWord">Cricket</b-button>
-    </b-modal>
+    <wordSelection ref="word-selector"/>
 </div>
 </template>
 
 <script>
 import headerLabel from './canvas/headerLabel';
 import toolbox from './canvas/toolbox';
+import wordSelection from './wordSelection';
 import ColorPicker from '@radial-color-picker/vue-color-picker';
 import _ from 'underscore';
 
 export default {
   name: 'Game',
-  components: {headerLabel, toolbox, ColorPicker},
+  components: {headerLabel, toolbox, ColorPicker, wordSelection},
   props: ['socket', 'playerList'],
   data(){
     return {
@@ -129,6 +117,8 @@ export default {
         isMouseButtonHold: false,
         actualBrush: 'circle',
         brushSize: 24,
+        searchingWordsSimilarTo: undefined,
+        wordsSimilarToFound: [],
         blackboard: {
           circles: [],
           rects:  [],
@@ -202,17 +192,8 @@ export default {
     getDrawingPlayer(){
       this.socket.emit('LOAD_DRAWING_PLAYER', (callback) => {
         this.gameData.drawingPlayer = callback;
-        this.socket.id === this.gameData.drawingPlayer.id ? this.selectWord() : 0;
+        this.socket.id === this.gameData.drawingPlayer.id ? wordSelection.selectWord() : 0;
       })
-    },
-    selectWord(){
-      this.$refs['word-selector'].show();
-    },
-    selectedWord(e){  
-      this.wordSelected = e.originalTarget.innerText;
-      this.socket.emit('WORD_SELECTED', this.wordSelected);
-
-      this.$refs['word-selector'].hide();
     },
     hideColorPicker(hue) {
        this.color.hue = hue;
