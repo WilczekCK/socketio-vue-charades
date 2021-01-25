@@ -10,14 +10,14 @@
       <b-form-group class="pt-4" id="searchingWordsSimilarTo-group" label="Search noun related with word :" label-for="searchingWordsSimilarTo">
         <b-form-input
           id="searchingWordsSimilarTo"
-          v-model="wordsSimilarFound"
+          v-model="searchWordsSimilarTo"
           placeholder="Type in the word you want to search nouns for draw"
           @change="fetchWords"
         ></b-form-input>
       </b-form-group>
 
       <b-button 
-        v-for="word in wordsSimilarFounnd"
+        v-for="word in wordsSimilarFound"
         class="mt-3"
         variant="primary"
         block
@@ -32,6 +32,7 @@
 import _ from 'underscore';
 export default {
   name: 'wordSelection',
+  props: ['drawingPlayerId', 'socket'],
   data(){
     return {
         wordsSimilarFound: [],
@@ -44,7 +45,7 @@ export default {
     fetchWords(){
         console.log('xD');
     },
-    selectWord: () => this.$refs['word-selector'].show(),
+    selectWord: function(){this.$refs['word-selector'].show()},
     selectedWord(e){  
       this.wordSelected = e.originalTarget.innerText;
       this.socket.emit('WORD_SELECTED', this.wordSelected);
@@ -53,7 +54,11 @@ export default {
     }
   },
   mounted: function(){
-   
+    //zla kolejność
+    const that = this;
+    this.socket.on('IS_PLAYER_SELECTED', ({userSelected}) => {
+        this.socket.id === userSelected.id ? that.selectWord() : 0;
+    })
   }
 }
 </script>

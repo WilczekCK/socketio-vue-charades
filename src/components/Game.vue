@@ -90,7 +90,7 @@
       <div class="text-center mt-4"> Click the circle inside to select size and color</div>
     </b-modal>
 
-    <wordSelection ref="word-selector"/>
+    <wordSelection :drawingPlayerId="gameData.drawingPlayer.id" :socket="socket"/>
 </div>
 </template>
 
@@ -192,7 +192,6 @@ export default {
     getDrawingPlayer(){
       this.socket.emit('LOAD_DRAWING_PLAYER', (callback) => {
         this.gameData.drawingPlayer = callback;
-        this.socket.id === this.gameData.drawingPlayer.id ? wordSelection.selectWord() : 0;
       })
     },
     hideColorPicker(hue) {

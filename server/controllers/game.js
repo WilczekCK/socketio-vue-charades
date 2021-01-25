@@ -52,7 +52,7 @@ const gameIO = {
     rollPlayer: function() {
         this.drawingPlayer = users.getRandomPlayer();
         this.isPlayerDrawing = true;
-        io.emit('IS_PLAYER_SELECTED');
+        io.emit('IS_PLAYER_SELECTED', {userSelected: this.drawingPlayer });
 
         chat.onSend({
             username: 'GAME',
