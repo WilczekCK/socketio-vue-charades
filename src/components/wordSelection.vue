@@ -12,7 +12,7 @@
           id="searchingWordsSimilarTo"
           v-model="searchWordsSimilarTo"
           placeholder="Type in the word you want to search nouns for draw"
-          @keyup="fetchWords"
+          @keyup="debounce(fetchWords())"
         ></b-form-input>
       </b-form-group>
 
@@ -38,21 +38,23 @@ export default {
   data(){
     return {
         wordsSimilarFound: [],
-        searchWordsSimilarTo: undefined,
+        searchWordsSimilarTo: '',
         wordSelected: undefined,
     }
   },
   methods: {
     debounce: (funcToDebounce) =>  _.debounce(funcToDebounce, 300),
     fetchWords: async function() {
+        if(!this.searchWordsSimilarTo) return 0;
+        
         const that = this;
         await axios.get(`https://api.datamuse.com/words?rel_jja=${this.searchWordsSimilarTo}&max=50`)
-        .then(function({data}){
-            let shuffled = _.shuffle(data);
-            that.wordsSimilarFound = [shuffled[0], shuffled[1], shuffled[3]];
+        .then(function(data){
+            let shuffled = _.shuffle(data.data);
+            that.wordsSimilarFound = [shuffled[0], shuffled[1], shuffled[2], shuffled[3], shuffled[4]];
         })
     },
-    selectWord: async function(){
+    selectWord: function(){
         this.$refs['word-selector'].show()
     },
     selectedWord(e){  
@@ -63,7 +65,6 @@ export default {
     }
   },
   mounted: function(){
-    //zla kolejność
     const that = this;
     this.socket.on('IS_PLAYER_SELECTED', ({userSelected}) => {
         this.socket.id === userSelected.id ? that.selectWord() : 0;
