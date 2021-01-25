@@ -12,7 +12,7 @@
           id="searchingWordsSimilarTo"
           v-model="searchWordsSimilarTo"
           placeholder="Type in the word you want to search nouns for draw"
-          @change="fetchWords"
+          @keyup="fetchWords"
         ></b-form-input>
       </b-form-group>
 
@@ -24,12 +24,14 @@
         @click="selectedWord"
         :key="word.length"
         >
-        {word}</b-button>
+        {{word.word}}</b-button>
     </b-modal>
 </template>
 
 <script>
 import _ from 'underscore';
+import axios from 'axios';
+
 export default {
   name: 'wordSelection',
   props: ['drawingPlayerId', 'socket'],
@@ -42,10 +44,17 @@ export default {
   },
   methods: {
     debounce: (funcToDebounce) =>  _.debounce(funcToDebounce, 300),
-    fetchWords(){
-        console.log('xD');
+    fetchWords: async function() {
+        const that = this;
+        await axios.get(`https://api.datamuse.com/words?rel_jja=${this.searchWordsSimilarTo}&max=50`)
+        .then(function({data}){
+            let shuffled = _.shuffle(data);
+            that.wordsSimilarFound = [shuffled[0], shuffled[1], shuffled[3]];
+        })
     },
-    selectWord: function(){this.$refs['word-selector'].show()},
+    selectWord: async function(){
+        this.$refs['word-selector'].show()
+    },
     selectedWord(e){  
       this.wordSelected = e.originalTarget.innerText;
       this.socket.emit('WORD_SELECTED', this.wordSelected);
