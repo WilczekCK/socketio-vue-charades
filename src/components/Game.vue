@@ -195,7 +195,7 @@ export default {
       })
     },
     hideColorPicker(hue) {
-       this.color.hue = hue;
+       this.color.hue = Math.floor(hue);
        this.$refs['color-picker'].hide();
     },
   },
