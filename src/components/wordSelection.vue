@@ -25,6 +25,11 @@
         :key="word.length"
         >
         {{word.word}}</b-button>
+      <h6 v-if="wordsSimilarFound.length < 1 && searchWordsSimilarTo.length > 0">
+        Sorry, word you provided isn't related with any noun from API.
+        <br/>
+        Please, try with another word. 
+      </h6>
     </b-modal>
 </template>
 
@@ -45,13 +50,16 @@ export default {
   methods: {
     debounce: (funcToDebounce) =>  _.debounce(funcToDebounce, 300),
     fetchWords: async function() {
-        if(!this.searchWordsSimilarTo) return 0;
         
         const that = this;
         await axios.get(`https://api.datamuse.com/words?rel_jja=${this.searchWordsSimilarTo}&max=50`)
-        .then(function(data){
-            let shuffled = _.shuffle(data.data);
-            that.wordsSimilarFound = [shuffled[0], shuffled[1], shuffled[2], shuffled[3], shuffled[4]];
+        .then(function({data}){
+            if(_.isEmpty(data) || !data) return that.wordsSimilarFound = [];
+
+            that.wordsSimilarFound = _.sample(_.shuffle(data), 5); //shuffle and sample it to 5 records
+        })
+        .catch(function(err){
+            console.log(err)
         })
     },
     selectWord: function(){
