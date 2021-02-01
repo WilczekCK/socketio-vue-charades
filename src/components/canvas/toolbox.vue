@@ -17,7 +17,7 @@
 <script>
 export default {
   data() {
-    const defaultX = 1100;
+    const defaultX = 0;
     const defaultY = 120;
     const defaultIconColor = 'white';
     const opacity = 0.8;
