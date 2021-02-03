@@ -10,6 +10,7 @@ const io = require('./socket');
 io.on('connection', function(socket){
     socket.on("PLAYER_CONNECTED", function(username){
         users.onConnect(socket.id, username);
+
         if(!game.isPlayerDrawing && users.getPlayerList().length > 1){
             game.rollPlayer();
         }

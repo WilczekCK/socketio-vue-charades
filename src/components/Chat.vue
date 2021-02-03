@@ -19,19 +19,6 @@
             </b-row>
             
         </b-container>
-
-        <b-container fluid class="alert_system">
-            <b-alert
-                :show="alert.dismissCountDown"
-                dismissible
-                fade
-                variant="success"
-                @dismissed="alert.dismissCountDown=0"
-                @dismiss-count-down="countDownChanged"
-                >
-                New player appeared! :)
-            </b-alert>
-        </b-container>
     </b-container>
 </template>
 
@@ -49,11 +36,6 @@ export default {
         user: 'Guest',
         message: '',
         messages: [],
-
-        alert: {
-            dismissSecs: 5,
-            dismissCountDown: 0
-        }
       }
   },  
   methods: {
@@ -65,13 +47,7 @@ export default {
           });
 
           this.message = '';
-      },
-      showAlert() {
-        this.alert.dismissCountDown = this.alert.dismissSecs
-      },
-      countDownChanged(dismissCountDown) {
-        this.alert.dismissCountDown = dismissCountDown
-      },
+      }
   },
   mounted: function (){
     this.socket.on("MESSAGE", (data) => {
@@ -82,7 +58,6 @@ export default {
       isUsernameProvided: function() {
         this.user = this.username ? this.username : 'Guest';
         this.socket.emit('PLAYER_CONNECTED', this.user);
-        this.showAlert();
       }
   }
 }

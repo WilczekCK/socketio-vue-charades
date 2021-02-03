@@ -29,6 +29,20 @@
     <b-container class="chat__container">
       <Chat :isUsernameProvided="isUsernameProvided" :username="username" :socket='socket' :playerList="playerList" />
     </b-container>
+
+
+      <b-container fluid class="alert_system">
+          <b-alert
+              :show="alert.dismissCountDown"
+              dismissible
+              fade
+              :variant="alert.variant"
+              @dismissed="alert.dismissCountDown=0"
+              @dismiss-count-down="countDownChanged"
+              >
+              {{alert.message}}
+          </b-alert>
+      </b-container>
   </div>
 </template>
 
@@ -50,6 +64,14 @@ export default {
       username: 'Guest',
       isUsernameProvided: false,
       playerList: [],
+
+
+      alert: {
+          dismissSecs: 5,
+          dismissCountDown: 0,
+          message: undefined,
+          variant: 'success',
+      }
     }
   },
   components: {
@@ -65,12 +87,24 @@ export default {
         this.socket.emit('PLAYER_LIST', (callback) => {
             this.playerList = callback;
         })
-    }
+    },
+    showAlert() {
+      this.alert.dismissCountDown = this.alert.dismissSecs
+    },
+    countDownChanged(dismissCountDown) {
+      this.alert.dismissCountDown = dismissCountDown
+    },
   },
   mounted() {
     this.$refs['nickname-modal'].show();
     this.socket.on('PLAYER_LIST_UPDATE', () => {
       this.updatePlayerList();    
+    })
+  
+    this.socket.on("ALERT_MESSAGE", (data) => {
+      this.alert.message = `${data.username} just joined!`
+      this.alert.variant = data.variant;
+      this.showAlert();
     })
   }
 }

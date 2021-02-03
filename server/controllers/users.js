@@ -23,10 +23,10 @@ const userIO = {
 
         onlineList = [...onlineList, new User(id, username, 0)];
 
-        io.emit('MESSAGE', {
+        io.emit('ALERT_MESSAGE', {
             username: username,
             message: 'just joined! Say "Hi!" to welcome new player :)',
-            type:'joined__message'
+            variant: 'success'
         })
 
         io.emit("PLAYER_LIST_UPDATE");
