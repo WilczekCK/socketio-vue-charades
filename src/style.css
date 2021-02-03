@@ -85,6 +85,13 @@ ul.chat__menu__playerList{
     padding-right:0px;
 }
 
+.alert_system{
+    position:absolute;
+    max-width:315px;
+    top:10px;
+    right:10px;
+}
+
 @media (max-width: 1200px){
     .konvajs-content{margin:0 auto;}
     #app{justify-content:flex-start}
