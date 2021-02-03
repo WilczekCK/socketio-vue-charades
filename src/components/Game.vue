@@ -1,5 +1,5 @@
 <template>
-<div style="height:100%;">
+<div>
     <v-stage ref="blackboard" :config="conva.config" @mousemove="debounce(mouseHandler(gameData.actualBrush), 100)" @mousedown="startDraw(gameData.actualBrush)"  @mouseup="stopDraw">  
      
       <v-layer>
@@ -142,12 +142,14 @@ export default {
       },
       conva: {
         config: {
+          scale: 1,
           width: 1140,
           height: 535
         },
         rect: {
           x: 0,
           y: 0,
+          scale: 1,
           width: 1140,
           height: 535,
         },
@@ -163,8 +165,8 @@ export default {
       if( !this.isActualPlayerTryingToDraw() ) return;
       const mousePos = this.$refs.blackboard.getNode().getPointerPosition();
       const preparePaint = {
-          x:mousePos.x,
-          y:mousePos.y,
+          x: (mousePos.x / this.conva.config.scale.x),
+          y: (mousePos.y / this.conva.config.scale.y),
           brush : brush,
           size: this.gameData.brushSize,
           color: `hsl(${this.color.hue}, ${this.color.saturation}%, ${this.color.luminosity}%)`,
@@ -198,6 +200,18 @@ export default {
        this.color.hue = Math.floor(hue);
        this.$refs['color-picker'].hide();
     },
+    fitStageIntoParentContainer() {
+        var container = document.querySelector('.game__container');
+
+        // now we need to fit stage into parent
+        var containerWidth = container.offsetWidth;
+        // to do this we need to scale the stage
+        var scale = containerWidth / 1140;
+
+        this.conva.config.width = (1140 * scale);
+        this.conva.config.height = (535 * scale);
+        this.conva.config.scale = ({ x: scale, y: scale });
+      }
   },
   mounted: function(){
     //check while connecting, recog when start the game
@@ -218,6 +232,12 @@ export default {
           this.gameData.blackboard = callback;
         })
       })
+
+      //Scailing
+      this.fitStageIntoParentContainer();
+  },
+  created: function(){
+     window.addEventListener('resize', this.fitStageIntoParentContainer);
   }
 }
 </script>

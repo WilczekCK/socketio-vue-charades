@@ -79,6 +79,9 @@ ul.chat__menu__playerList{
     background:white;
     padding-left:0px;
     padding-right:0px;
-    height:535px;
+}
+
+@media (max-width: 1200px){
+    .konvajs-content{margin:0 auto;}
 }
 
