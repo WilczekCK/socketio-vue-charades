@@ -30,6 +30,13 @@
         <br/>
         Please, try with another word. 
       </h6>
+        <b-button 
+        class="mt-10"
+        variant="danger"
+        block
+        @click="socket.emit('NEXT_ROUND', true), $refs['word-selector'].hide()"
+        >
+        Do not want to draw? Click here!</b-button>
     </b-modal>
 </template>
 

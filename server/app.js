@@ -16,9 +16,9 @@ io.on('connection', function(socket){
         }
     })
 
-    socket.on('NEXT_ROUND', () => {
+    socket.on('NEXT_ROUND', (force) => {
         console.log(game.isPlayerDrawing, users.getPlayerList().length)
-        if(!game.isPlayerDrawing && users.getPlayerList().length > 1){
+        if(!game.isPlayerDrawing && users.getPlayerList().length > 1 || force){
             game.rollPlayer();
         }
     })
