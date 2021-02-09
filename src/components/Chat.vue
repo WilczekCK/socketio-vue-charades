@@ -40,6 +40,8 @@ export default {
   },  
   methods: {
       sendMessage(){
+          if(!this.message || this.message.length < 1) return;
+
           this.socket.emit('SEND_MESSAGE', {
               username: this.user,
               message: this.message,
