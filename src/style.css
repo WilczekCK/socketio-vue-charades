@@ -67,6 +67,8 @@ ul.chat__menu__playerList{
     padding-left:7.5px;
 }
 
+.regular__message:nth-child(even){background:rgba(0,0,0,.2);}
+
 .chat__system .chat__system__message.system__message{
     background-color:rgba(255,0,0,0.2);
 }
