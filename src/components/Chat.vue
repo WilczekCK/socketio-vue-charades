@@ -3,7 +3,7 @@
         <ButtonsAboveChat :socket="socket" :playerList="playerList"/>
 
         <b-container fluid class="chat__system">
-            <ul>
+            <ul v-chat-scroll="{always: false, smooth: true}">
                 <li class="chat__system__message" :class="{[message.type]: message.type}" v-for="message in messages" :key="message.length">
                    <span class="chat__system__message__user">{{message.username}}</span> : {{message.message}}
                 </li> 
