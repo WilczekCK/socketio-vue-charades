@@ -23,15 +23,20 @@ io.on('connection', function(socket){
         }
     })
 
+
     socket.on('WORD_SELECTED', (word) => {
         game.startRound(word);
     })
 
     socket.on("SEND_MESSAGE", function(data){
-        if(game.drawingPlayer.id === data.userId) return; //disallow drawing player to chat!
-        
-        chat.onSend(data);
-        game.checkIfWordIsProper(data, socket.id);
+        if(game.drawingPlayer.id === data.userId){
+            io.to(game.drawingPlayer.id).emit('MESSAGE', 
+                {username: 'GAME', message:"You cannot chat when you are drawing!", type: "system__message"}
+            )
+        }else{
+            chat.onSend(data);
+            game.checkIfWordIsProper(data, socket.id);
+        }
     })
 
     socket.on("OS_MESSAGE", function (data){

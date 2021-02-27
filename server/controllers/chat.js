@@ -9,7 +9,7 @@ class Message{
 }
 
 const chatIO = {
-    onSend: ({username, message, type}) => io.emit('MESSAGE', {username, message, type})
+    onSend: ({username, message, type}) => io.emit('MESSAGE', {username, message, type}),
 }
 
 module.exports = chatIO;

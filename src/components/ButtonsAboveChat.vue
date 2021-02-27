@@ -32,7 +32,6 @@
 
 <script>
 export default {
-    //<strong>{{recentPlayer}}</strong> comes to play!
   name: 'ButtonsAboveChat',
   props: ['socket', 'playerList'],
   data() {
