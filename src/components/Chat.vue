@@ -45,7 +45,8 @@ export default {
           this.socket.emit('SEND_MESSAGE', {
               username: this.user,
               message: this.message,
-              type: 'regular__message'
+              type: 'regular__message',
+              userId: this.socket.id
           });
 
           this.message = '';

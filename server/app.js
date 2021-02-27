@@ -28,6 +28,8 @@ io.on('connection', function(socket){
     })
 
     socket.on("SEND_MESSAGE", function(data){
+        if(game.drawingPlayer.id === data.userId) return; //disallow drawing player to chat!
+        
         chat.onSend(data);
         game.checkIfWordIsProper(data, socket.id);
     })
