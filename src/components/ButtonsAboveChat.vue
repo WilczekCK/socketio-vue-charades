@@ -2,9 +2,6 @@
         <b-container class="chat__menu">
             <b-row>
                 <b-col>
-                      <b-button block variant="primary">I want draw</b-button>
-                </b-col>
-                <b-col>
                       <b-button id="show_players_button" block variant="primary">Players online ({{playerList.length}})</b-button>
                         <b-popover target="show_players_button" variant="primary" triggers="click" placement="top">
                         <template #title>Players online list</template>
@@ -20,10 +17,12 @@
                     <b-button id="faq__button" block variant="primary">FAQ</b-button>
                     <b-popover target="faq__button" variant="primary" triggers="click" placement="top">
                         <template #title>Frequently Asked Questions</template>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                        Quisque eget risus eget dolor finibus pulvinar.
-                        Morbi lobortis id purus et vestibulum.
-                        Maecenas vitae congue leo. Sed ac commodo mauris.
+                        <ol>
+                            <li>Drawing player cannot chat</li>
+                            <li>If player will answer proper word, then drawing player gets the one point too</li>
+                            <li>Single round takes 5 minutes</li>
+                            <li>Open Source project!</li>
+                        </ol>
                     </b-popover>
                 </b-col>
             </b-row>
