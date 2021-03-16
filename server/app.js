@@ -26,6 +26,8 @@ io.on('connection', function(socket){
 
     socket.on('WORD_SELECTED', (word) => {
         game.startRound(word);
+
+        socket.emit('WORD_SELECTED');
     })
 
     socket.on("SEND_MESSAGE", function(data){
@@ -61,6 +63,10 @@ io.on('connection', function(socket){
 
     socket.on('GET_BLACKBOARD_DATA', (callback) => {
         callback(game.blackboard)
+    })
+
+    socket.on('GET_DRAWING_WORD', (callback) => {
+        callback(game.wordToAnswer);
     })
 
     socket.on('disconnect', () => {
