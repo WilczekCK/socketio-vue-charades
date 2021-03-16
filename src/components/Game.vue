@@ -5,8 +5,6 @@
       <v-layer>
         <v-group>
             <v-container>
-              <v-text v-if="gameData.wordSelected" :config="{text: `The word you have to draw is: ${ gameData.wordSelected }`, y: 50, x:6, fill:'#007bff', fontSize: 12}"> </v-text>
-
               <v-circle
               v-for="circle in gameData.blackboard.circles"
               :key="circle.id"
@@ -63,7 +61,7 @@
 
         <v-group>
           <v-rect :config="conva.rect"></v-rect>>
-          
+          <v-text v-if="gameData.wordSelected" :config="{text: `The word you have to draw is: ${ gameData.wordSelected }`, y: 50, x:6, fill:'#007bff', fontSize: 12}"> </v-text>
 
           <headerLabel />
           <toolbox
