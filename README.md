@@ -1,5 +1,9 @@
 # Charades-socketio-vue
 Online version: https://charades.osupoli.pl/ <br>
+If you won't be able to connect with someone (or connect by yourself) give it a moment, the Backend server must start.<br>
+It's turning off after 24H while nobody is playing.
+
+<br>
 Simple charades game connected with [Datamuse API wordfinding query engine](https://www.datamuse.com/api/)<br />
 It's not a quality code, but I hope it's easy to edit and read <br />
 
